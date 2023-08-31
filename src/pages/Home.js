@@ -13,20 +13,18 @@ const Home = () => {
             <img src='images/gbbanner.png' alt='Gophers Banner' className="w-full h-80 md:w-full"/>
          </div>
       </div>
-      <div className='flex justify-center p-10 m-10'>
-         <div className="flex max-w-md mx-2 overflow-hidden bg-white rounded-md shadow-md">
-            <div>
-            <img src='/images/gbbanner.png' alt='Gophers Banner' className="object-cover w-1/2 h-auto"/>
-            </div>
+      <div className='flex m-10 p-10flexjustify-center'>
+         <div className="flex flex-row max-w-md mx-2 overflow-hidden bg-white rounded-md shadow-md">
+            <img src='/images/megaphone.jpeg' alt='Gophers Banner' className="object-cover w-1/2 h-auto"/>
+           
             <div  className="flex-grow p-4">
                <h3 className="mb-4 text-4xl font-semibold text-left">Core Mission</h3>
                <p className='text-left text-l gray-600'>Our core mission is to enable minorities in tech to use Go as a tool to learn and teach programming and, ultimately, to empower underrepresented groups in tech to help increase diversity in the Go community.</p>
             </div>
          </div>
-         <div className="flex max-w-md mx-2 overflow-hidden bg-white rounded-md shadow-md">
-            <div>
-            <img className="object-cover w-1/2 h-auto" src='/images/gbbanner.png' alt='Gophers Banner'/>
-            </div>
+         <div className="flex flex-row bg-white rounded-md shadow-md overflow -hidden max-w-mdmx-2">
+            <img className="object-cover w-1/2 h-auto" src='/images/megaphone.jpeg' alt='Gophers Banner'/>
+            
             <div  className="flex-grow p-4">
                <h3 className="mb-4 text-4xl font-semibold text-left">Core Vision</h3>
                <p className='text-left text-l gray-600'>We believe education is most effective when it is tailored to and provided by local communities. We are dedicated to growing and supporting local teams of individuals and companies who will have ownership in the work they do. We are also dedicated to developing in-depth and idiomatic training materials. Our workshops are targeted at smaller, local Go communities, and not necessarily directly at the global Go community. But we believe that, as each individual in the Go community strengthens, the collective Go community will, in turn, strengthen as well.</p>
