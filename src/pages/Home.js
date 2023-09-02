@@ -26,6 +26,54 @@ const Home = () => {
                 </div>
             </div>
             <div className="flex justify-center p-5 m-5">
+                <div className="flex flex-row max-w-md mx-2 overflow-hidden transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6">
+                    <img
+                        src="/images/megaphone.jpeg"
+                        alt="Gophers Banner"
+                        className="object-cover w-1/3 h-32"
+                    />
+
+                    <div className="flex-grow p-4">
+                        <h3 className="mb-2 text-2xl font-semibold text-left">
+                            Core Mission
+                        </h3>
+                        <p className="text-left text-gray-600 text-md">
+                            Our core mission is to enable minorities in tech to
+                            use Go as a tool to learn and teach programming and,
+                            ultimately, to empower underrepresented groups in
+                            tech to help increase diversity in the Go community.
+                        </p>
+                    </div>
+                </div>
+                <div className="flex flex-row max-w-md mx-2 transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6">
+                    <img
+                        className="object-cover w-1/3 h-32"
+                        src="/images/megaphone.jpeg"
+                        alt="Gophers Banner"
+                    />
+
+                    <div className="flex-grow p-4">
+                        <h3 className="mb-2 text-2xl font-semibold text-left">
+                            Core Vision
+                        </h3>
+                        <p className="text-left text-gray-600 text-md">
+                            We believe education is most effective when it is
+                            tailored to and provided by local communities. We
+                            are dedicated to growing and supporting local teams
+                            of individuals and companies who will have ownership
+                            in the work they do. We are also dedicated to
+                            developing in-depth and idiomatic training
+                            materials. Our workshops are targeted at smaller,
+                            local Go communities, and not necessarily directly
+                            at the global Go community. But we believe that, as
+                            each individual in the Go community strengthens, the
+                            collective Go community will, in turn, strengthen as
+                            well.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {/* <div className="flex justify-center p-5 m-5">
                 <div className="flex flex-row max-w-md mx-2 overflow-hidden bg-white rounded-md shadow-md">
                     <img
                         src="/images/megaphone.jpeg"
@@ -72,7 +120,7 @@ const Home = () => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

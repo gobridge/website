@@ -46,7 +46,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="h-auto bg-fuchsia-100">
+        <nav className="h-auto shadow-lg bg-fuchsia-100 shadow-purple-500/50">
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
 
@@ -69,10 +69,10 @@ const Navbar = () => {
                             src="images/cleargblogo.png"
                             alt="Logo"
                         />
-                        <h1 className="text-2xl font-medium text-purple-700">GoBridge</h1>
+                        {/* <h1 className="text-2xl font-medium text-purple-700">GoBridge</h1> */}
                     </div>
                     <div className="flex mr-2 md:hidden">
-                        <button type = "button" onClick={toggleMenu} className="inline-flex items-center justify-center p-2 text-purple-400 bg-purple-700 rounded-md outline-none hover:text-white hover:bg-purple-700 focus:outline-none focus: ring-2 focus:ring-offset-2 focus:ring-offset-purple-800 focus:ring-white"
+                        <button type = "button" onClick={toggleMenu} className="inline-flex items-center justify-center p-2 text-purple-400 bg-purple-600 rounded-md outline-none hover:text-white hover:bg-purple-500 focus:outline-none focus: ring-2 focus:ring-offset-2 focus:ring-offset-purple-700 focus:ring-white"
                         >
                            <span className="sr-only"> Open Main Menu</span>
                            {menuOpen === true ? <LuX/> : <LuMenu />}
