@@ -10,7 +10,7 @@ const Home = () => {
                     </h1>
                     <p className="text-3xl text-left gray-600 text-">
                         GoBridge is a member of the non-profit organization
-                        BridgeFoundry. At GoBridge we build bridges to educate
+                        <a className="text-purple-400 hover:underline" target="_blank" rel="noopener noreferrer" href="https://bridgefoundry.org/"> BridgeFoundry.</a> At GoBridge we build bridges to educate
                         underrepresented communities to teach technical skills
                         and to foster diversity in Go. <br /> Contact us at
                         support@gobridge.org with any questions, issues or

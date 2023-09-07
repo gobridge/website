@@ -2,7 +2,7 @@ import React from "react";
 
 const Workshops = () => {
     return (
-        <div className="flex flex-col items-center justify-center p-3 m-8 md:flex-row">
+        <div className="flex flex-col items-center justify-center m-2 md:flex-row">
                 <div className="order-1 md:w-1/2 md:order-2">
                     <img
                         src="images/gopherlaptop.png"
