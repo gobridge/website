@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Link } from "react-router-dom";
 import { useState } from "react";
 import { LuX, LuMenu } from "react-icons/lu";
+import Home from "../pages/Home";
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -64,11 +65,13 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <img
-                            className="w-auto h-20 mb-1"
-                            src="images/cleargblogo.png"
-                            alt="Logo"
-                        />
+                        <a href='/'>                         
+                           <img
+                              className="w-auto h-20 mb-1"
+                              src="images/cleargblogo.png"
+                              alt="Logo"
+                           />
+                        </a>
                         {/* <h1 className="text-2xl font-medium text-purple-700">GoBridge</h1> */}
                     </div>
                     <div className="flex mr-2 md:hidden">

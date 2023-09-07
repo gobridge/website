@@ -7,6 +7,10 @@ import Home from './pages/Home';
 import Initiatives from './pages/Initiatives';
 import Talks from './pages/Talks';
 import Communities from './pages/Communities';
+import Workshops from './pages/Workshops';
+import Eventdocs from './pages/Eventdocs';
+import Sponsor from './pages/Sponsor';
+import Donate from './pages/Donate';
 
 function App() {
   return (
@@ -19,6 +23,10 @@ function App() {
                <Route path="/Initiatives" element={<Initiatives />} />        
                <Route path="/Talks" element={<Talks />} />            
                <Route path="/Communities" element={<Communities />} />            
+               <Route path="/Workshops" element={<Workshops />} />            
+               <Route path="/Eventdocs" element={<Eventdocs />} />            
+               <Route path="/Sponsor" element={<Sponsor />} />            
+               <Route path="/Donate" element={<Donate />} />            
          </Routes>
 
          <Footer/>
