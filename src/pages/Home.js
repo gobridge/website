@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import MailModal from "../components/MailModal";
 
 const Home = () => {
+   const [ showMailModal, setShowMailModal ] = useState(false)
+   
+   const handleOnClose = () => setShowMailModal(false)
+   
     return (
         <div>
             <div className="flex flex-col p-5 m-10 md:flex-row">
@@ -10,11 +15,22 @@ const Home = () => {
                     </h1>
                     <p className="text-3xl text-left gray-600 text-">
                         GoBridge is a member of the non-profit organization
-                        <a className="text-purple-400 hover:underline" target="_blank" rel="noopener noreferrer" href="https://bridgefoundry.org/"> BridgeFoundry.</a> At GoBridge we build bridges to educate
-                        underrepresented communities to teach technical skills
-                        and to foster diversity in Go. <br /> Contact us at 
-                         <a  className="text-purple-400 hover:underline" href="mailto:support@gobridge.org"> support@gobridge.org</a> with any questions, issues or
-                        request you may have.
+                        <a
+                            className="text-purple-400 hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://bridgefoundry.org/"
+                        >
+                            {" "}
+                            BridgeFoundry.
+                        </a>{" "}
+                        At GoBridge we build bridges to educate underrepresented
+                        communities to teach technical skills and to foster
+                        diversity in Go. <br /><br />
+                        <button onClick={() => setShowMailModal(true)} className="px-4 py-2 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110">
+                            Contact Us
+                        </button>
+                        <MailModal onClose={handleOnClose} visible={showMailModal}/>
                     </p>
                 </div>
                 <div className="order-1 md:w-1/2 md:order-2">
@@ -25,7 +41,7 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className="flex justify-center p-5 m-5">
+            <div className="flex justify-center p-5 m-5 corecard">
                 <div className="flex flex-row max-w-md mx-2 overflow-hidden transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6">
                     <img
                         src="/images/megaphone.jpeg"
@@ -73,54 +89,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="flex justify-center p-5 m-5">
-                <div className="flex flex-row max-w-md mx-2 overflow-hidden bg-white rounded-md shadow-md">
-                    <img
-                        src="/images/megaphone.jpeg"
-                        alt="Gophers Banner"
-                        className="object-cover w-1/3 h-32"
-                    />
-
-                    <div className="flex-grow p-4">
-                        <h3 className="mb-2 text-2xl font-semibold text-left">
-                            Core Mission
-                        </h3>
-                        <p className="text-left text-gray-600 text-md">
-                            Our core mission is to enable minorities in tech to
-                            use Go as a tool to learn and teach programming and,
-                            ultimately, to empower underrepresented groups in
-                            tech to help increase diversity in the Go community.
-                        </p>
-                    </div>
-                </div>
-                <div className="flex flex-row max-w-md mx-2 overflow-hidden bg-white rounded-md shadow-md">
-                    <img
-                        className="object-cover w-1/3 h-32"
-                        src="/images/megaphone.jpeg"
-                        alt="Gophers Banner"
-                    />
-
-                    <div className="flex-grow p-4">
-                        <h3 className="mb-2 text-2xl font-semibold text-left">
-                            Core Vision
-                        </h3>
-                        <p className="text-left text-gray-600 text-md">
-                            We believe education is most effective when it is
-                            tailored to and provided by local communities. We
-                            are dedicated to growing and supporting local teams
-                            of individuals and companies who will have ownership
-                            in the work they do. We are also dedicated to
-                            developing in-depth and idiomatic training
-                            materials. Our workshops are targeted at smaller,
-                            local Go communities, and not necessarily directly
-                            at the global Go community. But we believe that, as
-                            each individual in the Go community strengthens, the
-                            collective Go community will, in turn, strengthen as
-                            well.
-                        </p>
-                    </div>
-                </div>
-            </div> */}
         </div>
     );
 };
