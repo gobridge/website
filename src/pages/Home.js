@@ -89,10 +89,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col p-5 m-10 ">
-               <h2 className="mb-4 text-5xl font-bold text-left">Time-Sensitive Initiatives</h2>
-               <p className="text-3xl text-left gray-600 text-">These are initiatives that have a time limit if you're interested in applying or helping.</p>
-            </div>
         </div>
     );
 };
