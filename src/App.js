@@ -11,6 +11,7 @@ import Workshops from './pages/Workshops';
 import Eventdocs from './pages/Eventdocs';
 import Sponsor from './pages/Sponsor';
 import Donate from './pages/Donate';
+import WorkshopOrganize from './pages/WorkshopOrganize';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                <Route path="/Eventdocs" element={<Eventdocs />} />            
                <Route path="/Sponsor" element={<Sponsor />} />            
                <Route path="/Donate" element={<Donate />} />            
+               <Route path="/WorkshopOrganize" element={<WorkshopOrganize />} />            
          </Routes>
 
          <Footer/>

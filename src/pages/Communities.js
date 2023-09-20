@@ -1,6 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
+import MailModal from "../components/MailModal";
+
 
 const Communities = () => {
+   const [ showMailModal, setShowMailModal ] = useState(false)
+   
+   const handleOnClose = () => setShowMailModal(false)
+   
     return (      
       <div className="flex items-center justify-center">  
          {/* <div className="flex content-center justify-center w-auto p-5 m-10 md:flex-row"> */}
@@ -26,20 +32,23 @@ const Communities = () => {
                   </p><br/>
                   <ul className="justify-start pl-6 space-y-4 text-xl text-left text-gray-600 list-disc">
                      <li >
-                        We provide Go user groups access to a free Meetup account. This program is
+                        We provide Go user groups access to a free <a href="http://gdn.gobridge.org/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer" >Meetup</a> account. This program is
                         supported through generous contributions by Google. If
                         you are currently running a user group or thinking about
-                        one, send us an email. We can help you get things
-                        started. 
+                        one, send us an email. <br/>
+                        <button onClick={() => setShowMailModal(true)} className="px-2 py-1 text-sm font-semibold text-white transform bg-purple-300 rounded hover:bg-purple-400 motion-safe:hover:scale-110">
+                            Get Started
+                        </button>
+                        <MailModal onClose={handleOnClose} visible={showMailModal}/> 
                      </li>
                      <li >
-                        Gophers Slack is a thriving, real-time
+                        Gophers <a href="https://invite.slack.gobridge.org/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer">Slack</a>  is a thriving, real-time
                         messaging community. If you are looking to get immediate
                         answers to questions or join in the conversation about
                         Go with other Gophers, this is the place to be.                         
                      </li>
                      <li >
-                        Go Forum is a site where ideas, views, questions, and
+                        Go <a href="https://forum.golangbridge.org/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer">Forum</a> is a site where ideas, views, questions, and
                         answers can be exchanged and discussed. It also allows
                         for all the content that is discussed to be indexed and
                         searchable from the Web. If you are looking for
