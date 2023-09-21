@@ -21,7 +21,7 @@ const Workshops = () => {
                 <br />
                 <ul className="justify-start pl-6 space-y-4 text-xl text-left text-gray-600 list-disc">
                     <li>
-                        Start by creating an <a href="https://forum.golangbridge.org/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer">issue</a> in the workshops repo (<span className="italic font-semibold">issues </span>
+                        Start by creating an <a href="https://github.com/gobridge/workshops/issues" className="font-semibold text-purple-400" target="_blank" rel="noreferrer">issue</a> in the workshops repo (<span className="italic font-semibold">issues </span>
                         represent upcoming and potential events, and hold to-do
                         lists for each).
                     </li>
