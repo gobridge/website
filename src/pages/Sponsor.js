@@ -13,20 +13,14 @@ const Sponsor = () => {
                         can range from offering a space, paying for food or even
                         travel expenses for trainers. If you or your company is
                         interested in helping, please send us an email. <br />{" "}
-                        <a
-                            className="text-purple-500 hover:underline"
-                            href="/documents/AAA-Talk Framework.pdf"
-                            target="_blank"
-                        >
-                            add all the other links...check og repo
-                        </a>
                     </p>
                 </div>
                 <div className="order-1 md:w-1/2 md:order-2">
                     <img
                         src="images/mentoring.png"
                         alt="Gophers"
-                        className="w-15 h-90 md:w-full"
+                        className="w-full md:w-1/2"
+                        // className="w-15 h-90 md:w-full"
                     />
                 </div>
             </div>

@@ -85,9 +85,9 @@ const Organize = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center p-2 m-1 bg-gradient-to-b from-purple-200 to-white md:flex-row">
+            <div className="flex flex-col items-start justify-center p-1 m-2 bg-gradient-to-b from-purple-200 to-white md:flex-row">
                 <div className="flex flex-col content-center justify-center w-2/3 p-2 m-6 md:flex-col">
-                    <h1 className="mb-2 text-xl font-semibold text-left text-gray-700">
+                    <h1 className="text-xl font-semibold text-left text-gray-700">
                         Instructions on How To Organize
                     </h1>
                     <p className="text-xl text-left text-gray-600">
@@ -106,7 +106,7 @@ const Organize = () => {
                     </p>
                 </div>
                 <div className="flex flex-col content-center justify-center w-2/3 p-2 m-6 md:flex-col">
-                    <h1 className="mb-2 text-xl font-semibold text-left text-gray-700">
+                    <h1 className="text-xl font-semibold text-left text-gray-700">
                         Kickoff a GoBridge Event
                     </h1>
                     <p className="text-xl text-left text-gray-600">
