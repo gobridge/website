@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Workshops = () => {
     return (
-        <div className="flex flex-col items-center justify-center m-2 md:flex-row">
-            <div className="order-1 md:w-1/2 md:order-2">
+        <div className="flex flex-col items-center justify-center m-5 md:flex-row">
+            <div className="order-1 md:w-2/3 md:order-2">
                 <img
                     src="images/gopherlaptop.png"
-                    alt="Gophers Banner"
-                    className="w-full h-2/3 md:w-auto"
+                    alt="Gophers"
+                    className="w-2/3 h-2/3 md:w-auto"
                 />
             </div>
             <div className="flex-col justify-center order-2 m-10 md:w-1/2 md:pr-8 md:order-1">
@@ -36,8 +37,8 @@ const Workshops = () => {
                         email notification and will contact you promptly.
                     </li>
                     <li>
-                        If you are looking for more detailed information, this
-                        workshop link will help.
+                        If you are looking for more detailed information, this <Link to={'/WorkshopOrganize'} className="font-semibold text-purple-400">workshop </Link>
+                         link will help.
                     </li>
                 </ul>
             </div>
