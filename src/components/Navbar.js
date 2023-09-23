@@ -50,12 +50,12 @@ const Navbar = () => {
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
 
-                    <div className="hidden md:block">
-                        <div className="flex items-baseline ml-10 space-x-4">
+                    <div className="hidden lg:block">
+                        <div className="flex items-center ml-10 space-x-4">
                            {navlinks.map((link, index) => (
                               <a
                                  key={index}
-                                 className="px-3 py-2 font-medium text-purple-300 transition-all duration-500 rounded hover:bg-purple-400 hover:text-white-md text-md"
+                                 className="px-3 py-2 font-medium text-purple-400 transition-all duration-500 rounded hover:bg-purple-500 hover:text-white text-md"
                                  href={link.link}
                               >
                                  {link.title}
@@ -71,9 +71,8 @@ const Navbar = () => {
                               alt="Logo"
                            />
                         </a>
-                        {/* <h1 className="text-2xl font-medium text-purple-700">GoBridge</h1> */}
                     </div>
-                    <div className="flex mr-2 md:hidden">
+                    <div className="flex mr-2 lg:hidden">
                         <button type = "button" onClick={toggleMenu} className="inline-flex items-center justify-center p-2 text-purple-400 bg-purple-600 rounded-md outline-none hover:text-white hover:bg-purple-500 focus:outline-none focus: ring-2 focus:ring-offset-2 focus:ring-offset-purple-700 focus:ring-white"
                         >
                            <span className="sr-only"> Open Main Menu</span>
@@ -83,7 +82,7 @@ const Navbar = () => {
                 </div>
             </div>
             {menuOpen ? (
-               <div className="md:hidden">
+               <div className="lg:hidden">
                   <div className="pt-2 pb-3 space-y-1 ox-2 sm:px-3">
                      {navlinks.map((link, index) => (
                               <a

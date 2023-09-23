@@ -10,16 +10,16 @@ const Communities = () => {
     return (      
       <div className="flex items-center justify-center">  
          {/* <div className="flex content-center justify-center w-auto p-5 m-10 md:flex-row"> */}
-         <div className="flex flex-col content-center justify-center w-2/3 p-5 m-10 md:flex-row">
+         <div className="flex flex-col items-center justify-center w-full p-1 m-3 md:flex-col">
                {/* <div className="order-1 w-auto md:w-1/2 md:order-2"> */}
-               <div className="flex flex-col justify-center order-2 md:w-1/2 md:pr-8 md:order-1">
+               <div className="flex flex-col justify-center order-2 md:w-2/3 md:pr-8 md:order-1">
                   <img
                      src="images/community.png"
                      alt="Gophers Banner"
                      className="w-full h-90 md:w-auto"
                   />
                </div>
-               <div className="flex flex-col justify-center order-2 m-10 md:w-1/2 md:pr-8 md:order-1">
+               <div className="flex flex-col justify-center order-2 m-10 md:w-2/3 md:pr-8 md:order-1">
                   <h1 className="mb-4 text-5xl font-bold text-left">
                      Online/Offline Communities
                   </h1>

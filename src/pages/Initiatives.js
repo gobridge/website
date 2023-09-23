@@ -75,7 +75,7 @@ const Initiatives = () => {
                     <img
                         src="images/mentoring.png"
                         alt="Gophers Banner"
-                        className="object-contain w-1/4 h-32 m-5"
+                        className="block object-contain w-1/2 h-32 m-5 mx-auto"
                     />
 
                     <div className="flex-grow p-4">
@@ -98,7 +98,7 @@ const Initiatives = () => {
                     <img
                         src="images/gophersworking.png"
                         alt="Gophers Banner"
-                        className="object-contain w-1/2 h-32 m-5"
+                        className="block object-contain w-1/2 h-32 m-5 mx-auto"
                     />
 
                     <div className="flex-grow p-4">
@@ -119,7 +119,7 @@ const Initiatives = () => {
                     <img
                         src="images/gopherlaptop.png"
                         alt="Gophers Banner"
-                        className="object-contain w-1/2 h-32 m-5"
+                        className="block object-contain w-1/2 h-32 m-5 mx-auto"
                     />
 
                     <div className="flex-grow p-4">
@@ -137,7 +137,7 @@ const Initiatives = () => {
                     <img
                         src="images/gopherballoon.png"
                         alt="Gophers Banner"
-                        className="object-contain w-1/2 h-32 m-5 "
+                        className="block object-contain w-1/2 h-32 m-5 mx-auto"
                     />
 
                     <div className="flex-grow p-4">
