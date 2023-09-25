@@ -41,15 +41,16 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className="flex justify-center p-5 m-5 corecard">
-                <div className="flex flex-row max-w-md mx-2 overflow-hidden transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6">
+            <div className="flex flex-col justify-center gap-4 p-5 m-5 corecard lg:flex-row">
+                <div className="flex flex-col max-w-lg mx-2 overflow-hidden transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6 lg:flex-row lg:items-center">
                     <img
-                        src="/images/megaphone.jpeg"
+                        src="/images/goinclusion.png"
                         alt="Gophers Banner"
-                        className="object-cover w-1/3 h-32"
+                        // className="object-cover w-auto h-auto"
+                        className="block object-contain w-1/2 h-32 m-5 mx-auto"
                     />
 
-                    <div className="flex-grow p-4">
+                    <div className="flex-auto p-4">
                         <h3 className="mb-2 text-2xl font-semibold text-left">
                             Core Mission
                         </h3>
@@ -61,14 +62,15 @@ const Home = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-row max-w-md mx-2 transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6">
+                <div className="flex flex-col max-w-lg mx-2 transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6 lg:flex-row lg:items-center">
                     <img
-                        className="object-cover w-1/3 h-32"
-                        src="/images/megaphone.jpeg"
+                        // className="object-cover w-auto h-auto"
+                        className="block object-contain w-1/2 h-32 m-5 mx-auto"
+                        src="/images/cleargblogo.png"
                         alt="Gophers Banner"
                     />
 
-                    <div className="flex-grow p-4">
+                    <div className="flex-auto p-4">
                         <h3 className="mb-2 text-2xl font-semibold text-left">
                             Core Vision
                         </h3>
