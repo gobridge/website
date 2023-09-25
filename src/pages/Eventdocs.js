@@ -18,7 +18,7 @@ const Eventdocs = () => {
                             rel="nonopener noreferrer"
                         >
                             policy
-                        </a>
+                        </a>{" "}
                         document when providing attendees information about the
                         standards and resolution procedures for your event. Make
                         a copy and fill in the specifics about your organizers

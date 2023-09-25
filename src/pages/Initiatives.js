@@ -29,8 +29,8 @@ const Initiatives = () => {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 p-5 m-10 md:grid-cols-2 md:p-10 md:m-20 ">
-                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 md:flex-row md:p-5 md:m-10">
+            <div className="grid grid-cols-1 gap-4 p-5 m-10 lg:grid-cols-2 md:p-10 md:m-20 ">
+                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 lg:flex-row md:p-5 md:m-10">
                     <img
                         src="/images/meetuplogo.png"
                         alt="Gophers Banner"
@@ -51,7 +51,7 @@ const Initiatives = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 md:flex-row md:p-5 md:m-10">
+                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 lg:flex-row md:p-5 md:m-10">
                     <img
                         src="/images/goinclusion.png"
                         alt="Gophers Banner"
@@ -71,7 +71,7 @@ const Initiatives = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 md:flex-row md:p-5 md:m-10">
+                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 lg:flex-row md:p-5 md:m-10">
                     <img
                         src="images/mentoring.png"
                         alt="Gophers Banner"
@@ -94,7 +94,7 @@ const Initiatives = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 md:flex-row md:p-5 md:m-10">
+                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 lg:flex-row md:p-5 md:m-10">
                     <img
                         src="images/gophersworking.png"
                         alt="Gophers Banner"
@@ -115,7 +115,7 @@ const Initiatives = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 md:flex-row md:p-5 md:m-10">
+                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 lg:flex-row md:p-5 md:m-10">
                     <img
                         src="images/gopherlaptop.png"
                         alt="Gophers Banner"
@@ -133,7 +133,7 @@ const Initiatives = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 md:flex-row md:p-5 md:m-10">
+                <div className="flex flex-col transition-transform transform bg-white rounded-md shadow-lg over4flow-hidden shadow-purple-500/50 lg:flex-row md:p-5 md:m-10">
                     <img
                         src="images/gopherballoon.png"
                         alt="Gophers Banner"
