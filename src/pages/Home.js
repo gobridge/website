@@ -46,7 +46,6 @@ const Home = () => {
                     <img
                         src="/images/goinclusion.png"
                         alt="Gophers Banner"
-                        // className="object-cover w-auto h-auto"
                         className="block object-contain w-1/2 h-32 m-5 mx-auto"
                     />
 
@@ -64,7 +63,6 @@ const Home = () => {
                 </div>
                 <div className="flex flex-col max-w-lg mx-2 transition-transform transform bg-white rounded-md shadow-lg shadow-purple-500/50 hover:translate-y-6 lg:flex-row lg:items-center">
                     <img
-                        // className="object-cover w-auto h-auto"
                         className="block object-contain w-1/2 h-32 m-5 mx-auto"
                         src="/images/cleargblogo.png"
                         alt="Gophers Banner"

@@ -26,9 +26,10 @@ const Donate = () => {
                         non-profit details, including their EIN. When donating
                         through BridgeFoundry please note the funds are for
                         GoBridge. <br />{" "}
-                        <button className="px-4 py-2 mt-3 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110">
+                        <a href="https://bridgefoundry.org/donate" target="_blank" rel="noopener noreferrer"><button className="px-4 py-2 mt-3 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110">
                             Donate
-                        </button> <br/>
+                        </button> <br/></a>
+                        
                     </p>
                 </div>
                 <div className="order-1 md:w-1/2 md:order-1 lg:order-2">
