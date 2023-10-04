@@ -3,9 +3,11 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: 
   - 'build'
+  - '-f'
+  - 'zarf/docker/dockerfile'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/tour:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/website:$COMMIT_SHA'
   - '.'
 # Push the image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/tour:$COMMIT_SHA']
+  args: ['push', 'gcr.io/$PROJECT_ID/website:$COMMIT_SHA']
