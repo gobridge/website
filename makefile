@@ -15,6 +15,20 @@ build-run: build run
 
 # ==============================================================================
 
+BASE_IMAGE_NAME := gobridge
+SERVICE_NAME    := website
+VERSION         := 0.0.1
+SERVICE_IMAGE   := $(BASE_IMAGE_NAME)/$(SERVICE_NAME):$(VERSION)
+
+image:
+	docker build \
+		-f zarf/docker/dockerfile \
+		-t $(SERVICE_IMAGE) \
+		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+		.
+
+# ==============================================================================
+
 install:
 	cd app/frontends/website; npm i react-scripts
 
