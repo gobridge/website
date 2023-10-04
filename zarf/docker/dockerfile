@@ -1,7 +1,6 @@
 # Build the Go Binary.
 FROM golang:1.21.1 as build_website
 ENV CGO_ENABLED 0
-ARG BUILD_REF
 
 # Copy the source code into the container.
 COPY . /build
@@ -21,9 +20,7 @@ WORKDIR /build
 USER website
 CMD ["./website"]
 
-LABEL org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.title="website" \
+LABEL org.opencontainers.image.title="website" \
       org.opencontainers.image.authors="Alejandra Kennedy <me@aleintech.com>" \
       org.opencontainers.image.source="https://github.com/gobridge/website" \
       org.opencontainers.image.vendor="GoBridge"
-

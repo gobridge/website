@@ -51,7 +51,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 			WriteTimeout    time.Duration `conf:"default:10s"`
 			IdleTimeout     time.Duration `conf:"default:120s"`
 			ShutdownTimeout time.Duration `conf:"default:20s"`
-			Host            string        `conf:"default:0.0.0.0:3000"`
+			Host            string        `conf:"default:0.0.0.0:8080"`
 		}
 	}{
 		Version: conf.Version{
