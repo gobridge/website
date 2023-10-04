@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"fmt"
+	"io/fs"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,6 +16,9 @@ import (
 	"github.com/ardanlabs/conf/v3"
 	"github.com/gobridge/website/foundation/logger"
 )
+
+//go:embed static
+var static embed.FS
 
 func main() {
 	var log *logger.Logger
@@ -95,15 +100,29 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	// -------------------------------------------------------------------------
 
-	fileServer := http.FileServer(http.Dir("app/services/website/static"))
+	fSys, err := fs.Sub(static, "static")
+	if err != nil {
+		return err
+	}
+
+	fileServer := http.FileServer(http.FS(fSys))
 	fileMatcher := regexp.MustCompile(`\.[a-zA-Z]*$`)
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if !fileMatcher.MatchString(r.URL.Path) {
 			log.Info(ctx, "request", "url", r.URL.Path)
-			http.ServeFile(w, r, "app/services/website/static/index.html")
-		} else {
-			fileServer.ServeHTTP(w, r)
+
+			p, err := static.ReadFile("static/index.html")
+			if err != nil {
+				log.Info(ctx, "ERROR", "msg", err)
+				return
+			}
+
+			w.Write(p)
+			return
 		}
+
+		fileServer.ServeHTTP(w, r)
 	})
 
 	serverErrors := make(chan error, 1)
