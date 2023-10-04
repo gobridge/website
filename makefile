@@ -13,5 +13,11 @@ run:
 
 build-run: build run
 
+# ==============================================================================
+
 install:
 	cd app/frontends/website; npm i react-scripts
+
+tidy:
+	go mod tidy
+	go mod vendor
