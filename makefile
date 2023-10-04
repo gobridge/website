@@ -15,7 +15,7 @@ build-run: build run
 
 # ==============================================================================
 
-SERVICE_IMAGE := us-east1-docker.pkg.dev/gobridge-website/gobridge-website/prod-image:0.0.1
+SERVICE_IMAGE := gobridge/website:0.0.1
 
 image:
 	docker build \

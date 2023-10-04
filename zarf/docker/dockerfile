@@ -12,7 +12,6 @@ RUN go build
 
 # Run the Go Binary in Alpine.
 FROM alpine:3.18
-ARG BUILD_DATE
 RUN addgroup -g 1000 -S website && \
     adduser -u 1000 -h /build -G website -S website
 COPY --from=build_website --chown=website:website /build/app/services/website/website /build/website
