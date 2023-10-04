@@ -12,3 +12,6 @@ run:
 	go run app/services/website/main.go
 
 build-run: build run
+
+install:
+	cd app/frontends/website; npm i react-scripts
