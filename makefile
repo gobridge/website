@@ -2,11 +2,10 @@
 SHELL_PATH = /bin/ash
 SHELL = $(if $(wildcard $(SHELL_PATH)),/bin/ash,/bin/bash)
 
-.PHONY: build
 build:
-	npm run build
+	cd app/frontends/website; npm run build
 
 run:
-	go run go/app/services/website/main.go
+	go run app/services/website/main.go
 
 build-run: build run

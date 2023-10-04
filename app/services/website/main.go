@@ -16,18 +16,18 @@ func main() {
 }
 
 func run() error {
-	fileServer := http.FileServer(http.Dir("build"))
+	fileServer := http.FileServer(http.Dir("app/services/website/static"))
 	fileMatcher := regexp.MustCompile(`\.[a-zA-Z]*$`)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if !fileMatcher.MatchString(r.URL.Path) {
-			http.ServeFile(w, r, "build/index.html")
+			http.ServeFile(w, r, "app/services/website/static/index.html")
 		} else {
 			fileServer.ServeHTTP(w, r)
 		}
 	})
 
-	log.Print("Listening on 0.0.0.0:80...")
-	err := http.ListenAndServe("0.0.0.0:80", nil)
+	log.Print("Listening on 0.0.0.0:3000...")
+	err := http.ListenAndServe("0.0.0.0:3000", nil)
 	if err != nil {
 		return err
 	}
