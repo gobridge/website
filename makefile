@@ -13,6 +13,9 @@ run:
 
 build-run: build run
 
+contact:
+	curl -il -X POST -d '{"name":"Ale Kenn", "email":"me@aleintech.com", "msg":"hi there, can you help me"}' -H "Content-Type: application/json" http://localhost:8080/api/contact
+
 # ==============================================================================
 
 SERVICE_IMAGE := gobridge/website:0.0.1
@@ -22,6 +25,9 @@ image:
 		-f zarf/docker/dockerfile \
 		-t $(SERVICE_IMAGE) \
 		.
+
+run-docker:
+	docker run -p8080:8080 gobridge/website:0.0.1
 
 # ==============================================================================
 
