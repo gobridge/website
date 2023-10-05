@@ -26,14 +26,14 @@ func main() {
 		return handlers.GetTraceID(ctx)
 	}
 
-	log = logger.New(os.Stdout, logger.LevelInfo, "WEBSITE", traceIDFunc)
+	log = logger.New(os.Stdout, "WEBSITE", traceIDFunc)
 
 	// -------------------------------------------------------------------------
 
 	ctx := context.Background()
 
 	if err := run(ctx, log); err != nil {
-		log.Info(ctx, "ERROR", "msg", err)
+		log.Print(ctx, "ERROR", "msg", err)
 		os.Exit(1)
 	}
 }
@@ -71,19 +71,19 @@ func run(ctx context.Context, log *logger.Logger) error {
 	// -------------------------------------------------------------------------
 	// App Starting
 
-	log.Info(ctx, "starting service")
-	defer log.Info(ctx, "shutdown complete")
+	log.Print(ctx, "starting service")
+	defer log.Print(ctx, "shutdown complete")
 
 	out, err := conf.String(&cfg)
 	if err != nil {
 		return fmt.Errorf("generating config for output: %w", err)
 	}
-	log.Info(ctx, "startup", "config", out)
+	log.Print(ctx, "startup", "config", out)
 
 	// -------------------------------------------------------------------------
 	// Start API Service
 
-	log.Info(ctx, "startup", "status", "starting website")
+	log.Print(ctx, "startup", "status", "starting website")
 
 	if err := handlers.SetRoutes(log, static); err != nil {
 		return err
@@ -95,13 +95,13 @@ func run(ctx context.Context, log *logger.Logger) error {
 		ReadTimeout:  cfg.Web.ReadTimeout,
 		WriteTimeout: cfg.Web.WriteTimeout,
 		IdleTimeout:  cfg.Web.IdleTimeout,
-		ErrorLog:     logger.NewStdLogger(log, logger.LevelError),
+		ErrorLog:     logger.NewStdLogger(log),
 	}
 
 	serverErrors := make(chan error, 1)
 
 	go func() {
-		log.Info(ctx, "startup", "status", "api router started", "host", api.Addr)
+		log.Print(ctx, "startup", "status", "api router started", "host", api.Addr)
 		serverErrors <- api.ListenAndServe()
 	}()
 
@@ -116,8 +116,8 @@ func run(ctx context.Context, log *logger.Logger) error {
 		return fmt.Errorf("server error: %w", err)
 
 	case sig := <-shutdown:
-		log.Info(ctx, "shutdown", "status", "shutdown started", "signal", sig)
-		defer log.Info(ctx, "shutdown", "status", "shutdown complete", "signal", sig)
+		log.Print(ctx, "shutdown", "status", "shutdown started", "signal", sig)
+		defer log.Print(ctx, "shutdown", "status", "shutdown complete", "signal", sig)
 
 		ctx, cancel := context.WithTimeout(ctx, cfg.Web.ShutdownTimeout)
 		defer cancel()

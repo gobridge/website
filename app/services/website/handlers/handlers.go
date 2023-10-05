@@ -44,7 +44,7 @@ type handlers struct {
 
 func (h *handlers) index(w http.ResponseWriter, r *http.Request) {
 	if !h.fileMatcher.MatchString(r.URL.Path) {
-		h.log.Info(r.Context(), "request", "url", r.URL.Path)
+		h.log.Print(r.Context(), "request", "url", r.URL.Path)
 
 		ctx := r.Context()
 		if traceID := r.Header.Get("x-cloud-trace-context"); traceID != "" {
@@ -53,7 +53,7 @@ func (h *handlers) index(w http.ResponseWriter, r *http.Request) {
 
 		p, err := h.static.ReadFile("static/index.html")
 		if err != nil {
-			h.log.Info(ctx, "ERROR", "msg", err)
+			h.log.Print(ctx, "ERROR", "msg", err)
 			return
 		}
 
