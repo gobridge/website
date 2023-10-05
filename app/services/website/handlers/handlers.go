@@ -44,10 +44,9 @@ type handlers struct {
 
 func (h *handlers) index(w http.ResponseWriter, r *http.Request) {
 	if !h.fileMatcher.MatchString(r.URL.Path) {
-		ctx := r.Context()
-
 		h.log.Info(r.Context(), "request", "url", r.URL.Path)
 
+		ctx := r.Context()
 		if traceID := r.Header.Get("x-cloud-trace-context"); traceID != "" {
 			ctx = setTraceID(ctx, traceID)
 		}
@@ -70,6 +69,11 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
+
+	// ctx := r.Context()
+	// if traceID := r.Header.Get("x-cloud-trace-context"); traceID != "" {
+	// 	ctx = setTraceID(ctx, traceID)
+	// }
 
 	static := struct {
 		Status string
