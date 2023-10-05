@@ -1,9 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from "axios";
 
 const MailModal = ({visible, onClose}) => {
+   
+   const [status, setStatus] = useState("Send Email");
+   const [name, setName] = useState('')
+   const [email, setEmail] = useState('')
+   const [msg, setMsg] = useState('')
+   
+   
    const handleOnClose = (e) =>{
       if (e.target.id === 'container') onClose();
    };
+
+   const resetForm = () =>{
+      setEmail = useState('')
+      setMsg = useState('')
+      setName = useState('')
+      setStatus = useState("Send Email");
+   }
+
+   const handleSubmit= (e) =>{
+      e.preventDefault();
+      setStatus("Sending...");
+      axios.post('http://localhost:8080/api/contact')
+         .then(() =>{})
+         .catch((err) => console.log('error', err))
+      
+      resetForm();
+      
+   }
+
+   const handleChange = (e) => {
+      
+      const { name, value } = e.target;
+     
+      switch (name) {
+          case 'name':
+              setName(value);
+              break;
+          case 'email':
+              setEmail(value);
+              break;
+          case 'msg':
+              setMsg(value);
+              break;
+          default:
+
+      }
+  };
+
+   
    
    if(!visible) return null;  
    
@@ -12,13 +59,13 @@ const MailModal = ({visible, onClose}) => {
          <div className='p-2 bg-white rounded w-[90%] h-[60%] max-w-xl max-h-l flex flex-col justify-between items-center'>
          
             <p className='font-bold text-gray-600'> Contact Us</p>
-            <form className='w-full h-auto p-4 mt-4 mb-4'>
-               <input type='text' placeholder='Full Name' className='p-2 mb-5 border border-gray-700 rounded inputClass'></input>
-               <input type='email' placeholder='email' className='p-2 mb-5 border border-gray-700 rounded inputClass'></input>
-               <input type='text' placeholder='Message' className='p-2 mb-5 border border-gray-700 rounded h-52 inputClass'></input>
+            <form className='w-full h-auto p-4 mt-4 mb-4' onSubmit={handleSubmit}>
+               <input type='text' placeholder='Full Name'  className='p-2 mb-5 border border-gray-700 rounded inputClass' name='name' value={name} onChange={handleChange}></input>
+               <input type='email' placeholder='Email' className='p-2 mb-5 border border-gray-700 rounded inputClass' name='email' value={email} onChange={handleChange}></input>
+               <input type='text' placeholder='Message' className='p-2 mb-5 border border-gray-700 rounded h-52 inputClass' name='message' value={msg} onChange={handleChange}></input>
+               <button className='px-4 py-2 font-bold text-white bg-purple-400 rounded hover:bg-purple-500' type='submit'>{status}</button>
             </form>
            
-            <button className='px-4 py-2 font-bold text-white bg-purple-400 rounded hover:bg-purple-500'>Send Message</button>
          </div>
       </div>
    )
