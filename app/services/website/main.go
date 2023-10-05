@@ -5,15 +5,14 @@ import (
 	"embed"
 	"errors"
 	"fmt"
-	"io/fs"
 	"net/http"
 	"os"
 	"os/signal"
-	"regexp"
 	"syscall"
 	"time"
 
 	"github.com/ardanlabs/conf/v3"
+	"github.com/gobridge/website/app/services/website/handlers"
 	"github.com/gobridge/website/foundation/logger"
 )
 
@@ -24,7 +23,7 @@ func main() {
 	var log *logger.Logger
 
 	traceIDFunc := func(ctx context.Context) string {
-		return ""
+		return handlers.GetTraceID(ctx)
 	}
 
 	log = logger.New(os.Stdout, logger.LevelInfo, "WEBSITE", traceIDFunc)
@@ -86,8 +85,9 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	log.Info(ctx, "startup", "status", "starting website")
 
-	shutdown := make(chan os.Signal, 1)
-	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
+	if err := handlers.SetRoutes(log, static); err != nil {
+		return err
+	}
 
 	api := http.Server{
 		Addr:         cfg.Web.Host,
@@ -98,43 +98,18 @@ func run(ctx context.Context, log *logger.Logger) error {
 		ErrorLog:     logger.NewStdLogger(log, logger.LevelError),
 	}
 
-	// -------------------------------------------------------------------------
-
-	fSys, err := fs.Sub(static, "static")
-	if err != nil {
-		return err
-	}
-
-	fileServer := http.FileServer(http.FS(fSys))
-	fileMatcher := regexp.MustCompile(`\.[a-zA-Z]*$`)
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if !fileMatcher.MatchString(r.URL.Path) {
-			log.Info(ctx, "request", "url", r.URL.Path)
-
-			p, err := static.ReadFile("static/index.html")
-			if err != nil {
-				log.Info(ctx, "ERROR", "msg", err)
-				return
-			}
-
-			w.Write(p)
-			return
-		}
-
-		fileServer.ServeHTTP(w, r)
-	})
-
 	serverErrors := make(chan error, 1)
 
 	go func() {
 		log.Info(ctx, "startup", "status", "api router started", "host", api.Addr)
-
 		serverErrors <- api.ListenAndServe()
 	}()
 
 	// -------------------------------------------------------------------------
 	// Shutdown
+
+	shutdown := make(chan os.Signal, 1)
+	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
 
 	select {
 	case err := <-serverErrors:
