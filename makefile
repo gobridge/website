@@ -14,7 +14,7 @@ run:
 build-run: build run
 
 contact:
-	curl -il -X POST http://localhost:8080/api/contact
+	curl -il -X POST -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json" http://localhost:8080/api/contact
 
 # ==============================================================================
 
