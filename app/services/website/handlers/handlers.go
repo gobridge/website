@@ -7,10 +7,20 @@ import (
 	"fmt"
 	"io/fs"
 	"net/http"
+	"os"
 	"regexp"
 
 	"github.com/gobridge/website/foundation/logger"
+	"github.com/sendgrid/sendgrid-go"
+	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
+
+type result struct {
+	Status string
+	Msg    string
+}
+
+// =============================================================================
 
 // SetRoutes constructs the handlers value and binds all the routes
 // to the default mux.
@@ -70,17 +80,54 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ctx := r.Context()
-	// if traceID := r.Header.Get("x-cloud-trace-context"); traceID != "" {
-	// 	ctx = setTraceID(ctx, traceID)
-	// }
-
-	static := struct {
-		Status string
-	}{
-		Status: "OK",
+	ctx := r.Context()
+	if traceID := r.Header.Get("x-cloud-trace-context"); traceID != "" {
+		ctx = setTraceID(ctx, traceID)
 	}
-	json.NewEncoder(w).Encode(static)
+
+	body := make(map[string]interface{})
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sendError(ctx, h.log, w, err)
+		return
+	}
+
+	contactInfo, err := json.MarshalIndent(body, "", "    ")
+	if err != nil {
+		sendError(ctx, h.log, w, err)
+		return
+	}
+
+	from := mail.NewEmail("GoBridge Website", "support@gobridge.org")
+	subject := "Website Contact Us"
+	to := mail.NewEmail("GoBridge Support", "support@gobridge.org")
+	message := mail.NewSingleEmailPlainText(from, subject, to, string(contactInfo))
+	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
+
+	response, err := client.Send(message)
+	if err != nil {
+		sendError(ctx, h.log, w, err)
+		return
+	}
+
+	if response.StatusCode != http.StatusAccepted {
+		sendError(ctx, h.log, w, fmt.Errorf("client send failed with (%d)", response.StatusCode))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(result{Status: "SUCCESS"})
+
+	h.log.Print(r.Context(), "SUCCESS", "resp", response)
+}
+
+// =============================================================================
+
+func sendError(ctx context.Context, log *logger.Logger, w http.ResponseWriter, err error) {
+	log.Print(ctx, "ERROR", "msg", err)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusBadRequest)
+	json.NewEncoder(w).Encode(result{Status: "FAILED", Msg: err.Error()})
 }
 
 // =============================================================================
