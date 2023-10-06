@@ -9,11 +9,7 @@ const MailModal = ({ visible, onClose }) => {
 
     var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
-        apiURL =
-            window.location.protocol +
-            "//" +
-            window.location.hostname +
-            "/api/contact";
+        apiURL ="http://gobridge.org/api/contact"
     }
 
     const handleOnClose = (e) => {
