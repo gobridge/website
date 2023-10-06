@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter, Link } from "react-router-dom";
 import { useState } from "react";
 import { LuX, LuMenu } from "react-icons/lu";
 
