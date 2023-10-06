@@ -51,6 +51,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 			IdleTimeout     time.Duration `conf:"default:120s"`
 			ShutdownTimeout time.Duration `conf:"default:20s"`
 			Host            string        `conf:"default:0.0.0.0:8080"`
+			Env             string        `conf:"default:prod"`
 		}
 	}{
 		Version: conf.Version{
@@ -85,7 +86,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	log.Print(ctx, "startup", "status", "starting website")
 
-	if err := handlers.SetRoutes(log, static); err != nil {
+	if err := handlers.SetRoutes(log, static, cfg.Web.Env); err != nil {
 		return err
 	}
 

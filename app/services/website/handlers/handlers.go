@@ -24,13 +24,14 @@ type result struct {
 
 // SetRoutes constructs the handlers value and binds all the routes
 // to the default mux.
-func SetRoutes(log *logger.Logger, static embed.FS) error {
+func SetRoutes(log *logger.Logger, static embed.FS, env string) error {
 	fSys, err := fs.Sub(static, "static")
 	if err != nil {
 		return fmt.Errorf("switching to static folder: %w", err)
 	}
 
 	h := handlers{
+		env:         env,
 		log:         log,
 		static:      static,
 		fileServer:  http.FileServer(http.FS(fSys)),
@@ -46,6 +47,7 @@ func SetRoutes(log *logger.Logger, static embed.FS) error {
 // =============================================================================
 
 type handlers struct {
+	env         string
 	log         *logger.Logger
 	static      embed.FS
 	fileServer  http.Handler
@@ -75,6 +77,15 @@ func (h *handlers) index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
+	if h.env == "dev" && r.Method == http.MethodOptions {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		w.Header().Set("Access-Control-Max-Age", "86400")
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -87,12 +98,14 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 
 	body := make(map[string]interface{})
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		h.log.Print(ctx, "ERROR", "msg", err)
 		sendError(ctx, h.log, w, err)
 		return
 	}
 
 	contactInfo, err := json.MarshalIndent(body, "", "    ")
 	if err != nil {
+		h.log.Print(ctx, "ERROR", "msg", err)
 		sendError(ctx, h.log, w, err)
 		return
 	}
@@ -105,13 +118,22 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 
 	response, err := client.Send(message)
 	if err != nil {
+		h.log.Print(ctx, "ERROR", "msg", err)
 		sendError(ctx, h.log, w, err)
 		return
 	}
 
 	if response.StatusCode != http.StatusAccepted {
+		h.log.Print(ctx, "ERROR", "msg", err)
 		sendError(ctx, h.log, w, fmt.Errorf("client send failed with (%d)", response.StatusCode))
 		return
+	}
+
+	if h.env == "dev" {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		w.Header().Set("Access-Control-Max-Age", "86400")
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -124,7 +146,6 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 // =============================================================================
 
 func sendError(ctx context.Context, log *logger.Logger, w http.ResponseWriter, err error) {
-	log.Print(ctx, "ERROR", "msg", err)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusBadRequest)
 	json.NewEncoder(w).Encode(result{Status: "FAILED", Msg: err.Error()})
