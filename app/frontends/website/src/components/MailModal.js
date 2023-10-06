@@ -7,6 +7,25 @@ const MailModal = ({ visible, onClose }) => {
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
 
+    var apiURL = "";
+    if (window.location.port === "" || window.location.port === "0") {
+        apiURL =
+            window.location.protocol +
+            "//" +
+            window.location.hostname +
+            "/api/contact";
+    } else {
+        apiURL =
+            window.location.protocol +
+            "//" +
+            window.location.hostname +
+            ":" +
+            window.location.port +
+            "/api/contact";
+    }
+
+    apiURL = "http://localhost:8080/api/contact";
+
     const handleOnClose = (e) => {
         console.log("*****Handling Onclose");
         if (e.target.id === "container") onClose();
@@ -18,7 +37,7 @@ const MailModal = ({ visible, onClose }) => {
         setStatus("Sending...");
         try {
             const response = await axios.post(
-                "https://gobridge.org/api/contact",
+                apiURL,
                 {
                     name,
                     email,
