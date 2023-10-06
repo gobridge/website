@@ -20,7 +20,7 @@ tooling:
 	go install github.com/cosmtrek/air@latest
 
 contact:
-	curl -il -X POST -d '{"name":"Ale Kenn", "email":"me@aleintech.com", "msg":"hi there, can you help me"}' -H "Content-Type: application/json" http://localhost:8080/api/contact
+	curl -il -X POST -d '{"name":"Ale Kenn", "email":"me@aleintech.com", "msg":"hi there, can you help me"}' -H "Content-Type: application/json" https://gobridge.org/api/contact
 
 # ==============================================================================
 

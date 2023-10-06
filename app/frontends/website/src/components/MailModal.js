@@ -13,22 +13,34 @@ const MailModal = ({visible, onClose}) => {
       if (e.target.id === 'container') onClose();
    };
 
-   const resetForm = () =>{
-      setEmail = useState('')
-      setMsg = useState('')
-      setName = useState('')
-      setStatus = useState("Send Email");
-   }
 
-   const handleSubmit= (e) =>{
+   const handleSubmit = async (e) => {
       e.preventDefault();
       setStatus("Sending...");
-      axios.post('http://localhost:8080/api/contact')
-         .then(() =>{})
-         .catch((err) => console.log('error', err))
-      
-      resetForm();
-      
+      try {
+         const response = await axios.post('https://gobridge.org/api/contact', {
+             name,
+             email,
+             msg,
+         }, {
+             headers: {
+                 'Content-Type': 'application/json',
+             },
+         });
+ 
+         if (response.status === 200) {
+             alert('Email sent successfully');
+         } else {
+             alert('Failed to send email');
+         }
+         setEmail('')
+         setName('')
+         setMsg('')
+         setStatus("Send Email")
+         
+     } catch (error) {
+         console.error('Error:', error);
+     }
    }
 
    const handleChange = (e) => {
@@ -42,7 +54,7 @@ const MailModal = ({visible, onClose}) => {
           case 'email':
               setEmail(value);
               break;
-          case 'msg':
+          case 'message':
               setMsg(value);
               break;
           default:
