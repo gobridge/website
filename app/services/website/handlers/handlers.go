@@ -11,6 +11,7 @@ import (
 	"regexp"
 
 	"github.com/gobridge/website/foundation/logger"
+	"github.com/sendgrid/rest"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
@@ -116,11 +117,18 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 	message := mail.NewSingleEmailPlainText(from, subject, to, string(contactInfo))
 	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
 
-	response, err := client.Send(message)
-	if err != nil {
-		h.log.Print(ctx, "ERROR", "msg", err)
-		sendError(ctx, h.log, w, err)
-		return
+	response := &rest.Response{
+		StatusCode: http.StatusAccepted,
+		Body:       `{"result: success"}`,
+	}
+
+	if h.env == "prod" {
+		response, err = client.Send(message)
+		if err != nil {
+			h.log.Print(ctx, "ERROR", "msg", err)
+			sendError(ctx, h.log, w, err)
+			return
+		}
 	}
 
 	if response.StatusCode != http.StatusAccepted {
