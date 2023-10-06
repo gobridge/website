@@ -13,8 +13,14 @@ run:
 
 build-run: build run
 
+watch-run:
+	air --build.send_interrupt true --build.cmd "go build -o ./tmp/main app/services/website/main.go" -build.bin "./tmp/main" --build.exclude_dir "app/frontends"
+
+tooling:
+	go install github.com/cosmtrek/air@latest
+
 contact:
-	curl -il -X POST -d '{"name":"Ale Kenn", "email":"me@aleintech.com", "msg":"hi there, can you help me"}' -H "Content-Type: application/json" http://localhost:8080/api/contact
+	curl -il -X POST -d '{"name":"Ale Kenn", "email":"me@aleintech.com", "msg":"hi there, can you help me"}' -H "Content-Type: application/json" https://gobridge.org/api/contact
 
 # ==============================================================================
 
