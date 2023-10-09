@@ -13,13 +13,18 @@ import (
 	"log/slog"
 )
 
+// TraceIDFunc represents a function that can return the trace id from
+// the specified context.
+type TraceIDFunc func(ctx context.Context) string
+
 // Logger represents a logger for logging information.
 type Logger struct {
-	handler slog.Handler
+	handler     slog.Handler
+	traceIDFunc TraceIDFunc
 }
 
 // New constructs a new log for application use.
-func New(w io.Writer, serviceName string) *Logger {
+func New(w io.Writer, serviceName string, traceIDFunc TraceIDFunc) *Logger {
 
 	// Convert the file name to just the name.ext when this key/value will
 	// be logged.
@@ -46,7 +51,8 @@ func New(w io.Writer, serviceName string) *Logger {
 	handler = handler.WithAttrs(attrs)
 
 	return &Logger{
-		handler: handler,
+		handler:     handler,
+		traceIDFunc: traceIDFunc,
 	}
 }
 
@@ -61,6 +67,11 @@ func (log *Logger) Print(ctx context.Context, msg string, args ...any) {
 	runtime.Callers(2, pcs[:])
 
 	r := slog.NewRecord(time.Now(), slog.LevelInfo, msg, pcs[0])
+
+	if log.traceIDFunc != nil {
+		args = append(args, "trace_id", log.traceIDFunc(ctx))
+	}
+	r.Add(args...)
 
 	log.handler.Handle(ctx, r)
 }

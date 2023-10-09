@@ -11,6 +11,7 @@ import (
 	"regexp"
 
 	"github.com/gobridge/website/foundation/logger"
+	"github.com/google/uuid"
 	"github.com/sendgrid/rest"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
@@ -25,15 +26,13 @@ type result struct {
 
 // SetRoutes constructs the handlers value and binds all the routes
 // to the default mux.
-func SetRoutes(log *logger.Logger, static embed.FS, env string, sendEmail bool) error {
+func SetRoutes(log *logger.Logger, static embed.FS) error {
 	fSys, err := fs.Sub(static, "static")
 	if err != nil {
 		return fmt.Errorf("switching to static folder: %w", err)
 	}
 
 	h := handlers{
-		env:         env,
-		sendEmail:   sendEmail,
 		log:         log,
 		static:      static,
 		fileServer:  http.FileServer(http.FS(fSys)),
@@ -41,12 +40,7 @@ func SetRoutes(log *logger.Logger, static embed.FS, env string, sendEmail bool) 
 	}
 
 	http.HandleFunc("/", h.index)
-
-	if env == "prod" {
-		http.HandleFunc("/api/contact", h.contactUsProd)
-	} else {
-		http.HandleFunc("/api/contact", h.contactUsDev)
-	}
+	http.HandleFunc("/api/contact", h.contactUs)
 
 	return nil
 }
@@ -54,8 +48,6 @@ func SetRoutes(log *logger.Logger, static embed.FS, env string, sendEmail bool) 
 // =============================================================================
 
 type handlers struct {
-	env         string
-	sendEmail   bool
 	log         *logger.Logger
 	static      embed.FS
 	fileServer  http.Handler
@@ -84,26 +76,96 @@ func (h *handlers) index(w http.ResponseWriter, r *http.Request) {
 	h.fileServer.ServeHTTP(w, r)
 }
 
+func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
+	ctx := setTraceID(r.Context(), uuid.NewString())
+	r = r.WithContext(ctx)
+
+	h.log.Print(r.Context(), "handler-started", "host", r.Host)
+	defer h.log.Print(r.Context(), "handler-completed")
+
+	if r.Host == "localhost:8080" {
+		h.contactUsDev(w, r)
+		return
+	}
+
+	h.contactUsProd(w, r)
+}
+
 func (h *handlers) contactUsProd(w http.ResponseWriter, r *http.Request) {
+	h.log.Print(r.Context(), "contactUsProd")
+
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	ctx := r.Context()
+	response, err := sendEmail(r.Context(), h.log, w, r)
+	if err != nil {
+		h.log.Print(r.Context(), "ERROR", "msg", err)
+		sendError(r.Context(), h.log, w, err)
+	}
 
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(result{Status: "SUCCESS"})
+
+	h.log.Print(r.Context(), "SUCCESS", "resp", response)
+}
+
+func (h *handlers) contactUsDev(w http.ResponseWriter, r *http.Request) {
+	h.log.Print(r.Context(), "contactUsDev")
+
+	email := r.URL.Query().Get("email")
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("Access-Control-Max-Age", "86400")
+	w.Header().Set("Content-Type", "application/json")
+
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	var response *rest.Response
+	switch email {
+	case "fail":
+		err := fmt.Errorf("client send failed with (%d)", http.StatusBadRequest)
+		h.log.Print(r.Context(), "ERROR", "msg", err)
+		sendError(r.Context(), h.log, w, err)
+
+	case "send":
+		h.contactUsProd(w, r)
+
+	default:
+		response = &rest.Response{
+			StatusCode: http.StatusAccepted,
+			Body:       `{"result: success"}`,
+		}
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(result{Status: "SUCCESS"})
+
+		h.log.Print(r.Context(), "SUCCESS", "resp", response)
+	}
+}
+
+// =============================================================================
+
+func sendEmail(ctx context.Context, log *logger.Logger, w http.ResponseWriter, r *http.Request) (*rest.Response, error) {
 	body := make(map[string]interface{})
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		h.log.Print(ctx, "ERROR", "msg", err)
-		sendError(ctx, h.log, w, err)
-		return
+		return nil, fmt.Errorf("decode: %w", err)
 	}
 
 	contactInfo, err := json.MarshalIndent(body, "", "    ")
 	if err != nil {
-		h.log.Print(ctx, "ERROR", "msg", err)
-		sendError(ctx, h.log, w, err)
-		return
+		return nil, fmt.Errorf("marshal: %w", err)
 	}
 
 	from := mail.NewEmail("GoBridge Website", "support@gobridge.org")
@@ -114,97 +176,16 @@ func (h *handlers) contactUsProd(w http.ResponseWriter, r *http.Request) {
 
 	response, err := client.Send(message)
 	if err != nil {
-		h.log.Print(ctx, "ERROR", "msg", err)
-		sendError(ctx, h.log, w, err)
-		return
-	}
-
-	if response.StatusCode != http.StatusAccepted {
-		h.log.Print(ctx, "ERROR", "msg", err)
-		sendError(ctx, h.log, w, fmt.Errorf("client send failed with (%d)", response.StatusCode))
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(result{Status: "SUCCESS"})
-
-	h.log.Print(r.Context(), "SUCCESS", "resp", response)
-}
-
-func (h *handlers) contactUsDev(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodOptions {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-		w.Header().Set("Access-Control-Max-Age", "86400")
-		w.WriteHeader(http.StatusOK)
-		return
-	}
-
-	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusNotFound)
-		return
-	}
-
-	ctx := r.Context()
-
-	response := &rest.Response{
-		StatusCode: http.StatusAccepted,
-		Body:       `{"result: success"}`,
-	}
-
-	if h.sendEmail {
-		body := make(map[string]interface{})
-		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-			h.log.Print(ctx, "ERROR", "msg", err)
-			sendError(ctx, h.log, w, err)
-			return
-		}
-
-		contactInfo, err := json.MarshalIndent(body, "", "    ")
-		if err != nil {
-			h.log.Print(ctx, "ERROR", "msg", err)
-			sendError(ctx, h.log, w, err)
-			return
-		}
-
-		from := mail.NewEmail("GoBridge Website", "support@gobridge.org")
-		subject := "Website Contact Us"
-		to := mail.NewEmail("GoBridge Support", "support@gobridge.org")
-		message := mail.NewSingleEmailPlainText(from, subject, to, string(contactInfo))
-		client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
-
-		if h.env == "prod" {
-			response, err = client.Send(message)
-			if err != nil {
-				h.log.Print(ctx, "ERROR", "msg", err)
-				sendError(ctx, h.log, w, err)
-				return
-			}
-		}
+		return nil, fmt.Errorf("send email: %w", err)
 	}
 
 	if response.StatusCode != http.StatusAccepted {
 		err := fmt.Errorf("client send failed with (%d)", response.StatusCode)
-		h.log.Print(ctx, "ERROR", "msg", err)
-		sendError(ctx, h.log, w, err)
-		return
+		return nil, err
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-	w.Header().Set("Access-Control-Max-Age", "86400")
-	w.Header().Set("Content-Type", "application/json")
-
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(result{Status: "SUCCESS"})
-
-	h.log.Print(r.Context(), "SUCCESS", "resp", response)
+	return response, nil
 }
-
-// =============================================================================
 
 func sendError(ctx context.Context, log *logger.Logger, w http.ResponseWriter, err error) {
 	w.Header().Set("Content-Type", "application/json")

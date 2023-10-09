@@ -20,7 +20,11 @@ import (
 var static embed.FS
 
 func main() {
-	log := logger.New(os.Stdout, "WEBSITE")
+	traceIDFunc := func(ctx context.Context) string {
+		return handlers.GetTraceID(ctx)
+	}
+
+	log := logger.New(os.Stdout, "WEBSITE", traceIDFunc)
 
 	// -------------------------------------------------------------------------
 
@@ -45,8 +49,6 @@ func run(ctx context.Context, log *logger.Logger) error {
 			IdleTimeout     time.Duration `conf:"default:120s"`
 			ShutdownTimeout time.Duration `conf:"default:20s"`
 			Host            string        `conf:"default:0.0.0.0:8080"`
-			Env             string        `conf:"default:prod"`
-			DevSendEmail    bool          `conf:"default:false"`
 		}
 	}{
 		Version: conf.Version{
@@ -81,7 +83,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	log.Print(ctx, "startup", "status", "starting website")
 
-	if err := handlers.SetRoutes(log, static, cfg.Web.Env, cfg.Web.DevSendEmail); err != nil {
+	if err := handlers.SetRoutes(log, static); err != nil {
 		return err
 	}
 
