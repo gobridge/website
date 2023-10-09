@@ -81,6 +81,7 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 	r = r.WithContext(ctx)
 
 	h.log.Print(r.Context(), "handler-started", "host", r.Host)
+	h.log.Print(r.Context(), "HEADERS", "map", r.Header)
 	defer h.log.Print(r.Context(), "handler-completed")
 
 	if r.Host == "localhost:8080" {
