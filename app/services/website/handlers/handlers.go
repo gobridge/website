@@ -80,16 +80,22 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 	ctx := setTraceID(r.Context(), uuid.NewString())
 	r = r.WithContext(ctx)
 
-	h.log.Print(r.Context(), "handler-started", "host", r.Host)
+	origin := r.Header.Get("origin")
+
+	h.log.Print(r.Context(), "handler-started", "origin", origin)
 	h.log.Print(r.Context(), "HEADERS", "map", r.Header)
 	defer h.log.Print(r.Context(), "handler-completed")
 
-	if r.Host == "localhost:8080" {
+	switch origin {
+	case "http://localhost:3000":
 		h.contactUsDev(w, r)
-		return
-	}
 
-	h.contactUsProd(w, r)
+	case "https://gobridge.org":
+		h.contactUsProd(w, r)
+
+	default:
+		w.WriteHeader(http.StatusUnauthorized)
+	}
 }
 
 func (h *handlers) contactUsProd(w http.ResponseWriter, r *http.Request) {
