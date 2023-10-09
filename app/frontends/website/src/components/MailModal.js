@@ -6,15 +6,22 @@ const MailModal = ({ visible, onClose }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
-        apiURL ="http://gobridge.org/api/contact"
+        apiURL = "http://gobridge.org/api/contact";
     }
 
     const handleOnClose = (e) => {
         console.log("*****Handling Onclose");
         if (e.target.id === "container") onClose();
+        setName("");
+        setEmail("");
+        setMsg("");
+        setSuccessMessage("");
+        setErrorMessage("");
     };
 
     const handleSubmit = async (e) => {
@@ -38,16 +45,18 @@ const MailModal = ({ visible, onClose }) => {
 
             if (response.status === 200) {
                 console.log("***** email sent *****");
-                alert("Email sent successfully");
+                setSuccessMessage("Email sent successfully");
+                setEmail("");
+                setName("");
+                setMsg("");
             } else {
+                setErrorMessage("Failed to send email");
                 alert("Failed to send email");
             }
-            setEmail("");
-            setName("");
-            setMsg("");
             setStatus("Send Email");
         } catch (error) {
             console.error("Error:", error);
+            setErrorMessage("An error occurred while sending the email");
         }
         console.log("---->Exiting Handle Submit");
     };
@@ -77,8 +86,36 @@ const MailModal = ({ visible, onClose }) => {
             onClick={handleOnClose}
             className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm"
         >
-            <div className="p-2 bg-white rounded w-[90%] h-[60%] max-w-xl max-h-l flex flex-col justify-between items-center">
+            <div className="relative p-2 bg-white rounded w-[90%] h-auto max-w-xl max-h-l flex flex-col justify-between items-center">
+                <br />
+                <button
+                    className="absolute text-black bg-transparent border-0 top-2 right-2 "
+                    onClick={() => onClose()}
+                >
+                    <span className="justify-center block w-6 h-6 py-0 text-xl font-bold text-gray-600 bg-white rounded item-center opacity-7">
+                        x
+                    </span>
+                </button>
                 <p className="font-bold text-gray-600"> Contact Us</p>
+                {successMessage && (
+                    <div
+                        className="relative px-4 py-2 text-green-700 bg-green-100 border border-green-400 rounded"
+                        role="alert"
+                    >
+                        <span className="block sm:inline">
+                            {successMessage}
+                        </span>
+                    </div>
+                )}
+                {errorMessage && (
+                    <div
+                        className="relative px-4 py-2 text-red-700 bg-red-100 border border-red-400 rounded"
+                        role="alert"
+                    >
+                        <span className="block sm:inline">{errorMessage}</span>
+                    </div>
+                )}
+
                 <form
                     className="w-full h-auto p-4 mt-4 mb-4"
                     onSubmit={handleSubmit}
@@ -90,6 +127,7 @@ const MailModal = ({ visible, onClose }) => {
                         name="name"
                         value={name}
                         onChange={handleChange}
+                        required
                     ></input>
                     <input
                         type="email"
@@ -98,6 +136,7 @@ const MailModal = ({ visible, onClose }) => {
                         name="email"
                         value={email}
                         onChange={handleChange}
+                        required
                     ></input>
                     <input
                         type="text"
@@ -106,9 +145,10 @@ const MailModal = ({ visible, onClose }) => {
                         name="message"
                         value={msg}
                         onChange={handleChange}
+                        required
                     ></input>
                     <button
-                        className="px-4 py-2 font-bold text-white bg-purple-400 rounded hover:bg-purple-500"
+                        className="px-4 py-2 font-bold text-white bg-purple-400 rounded inputClass hover:bg-purple-500"
                         type="submit"
                     >
                         {status}

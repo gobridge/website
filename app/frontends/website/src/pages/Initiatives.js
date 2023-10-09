@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import MailModal from "../components/MailModal";
 
 const Initiatives = () => {
-   const [ showMailModal, setShowMailModal ] = useState(false)
-   
-   const handleOnClose = () => setShowMailModal(false)
-   
+    const [showMailModal, setShowMailModal] = useState(false);
+
+    const handleOnClose = () => setShowMailModal(false);
+
     return (
         <div>
             <div className="flex flex-col p-5 m-10 md:flex-row">
@@ -16,10 +16,16 @@ const Initiatives = () => {
                     <p className="text-3xl text-left text-gray-600">
                         We always have fun and exciting things we are working on
                         to support the Go community. If you have time to help or
-                        you think one of these programs can help you, send us an
-                        <a href="#" onClick={() => setShowMailModal(true)} className="font-semibold text-purple-400"> email</a>.
+                        you think one of these programs can help You 
+                        <br /><br />
+                        <button onClick={() => setShowMailModal(true)} className="px-4 py-2 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110">
+                            Contact Us
+                        </button>
+                        <MailModal
+                            onClose={handleOnClose}
+                            visible={showMailModal}
+                        />
                     </p>
-                    <MailModal onClose={handleOnClose} visible={showMailModal}/>
                 </div>
                 <div className="order-1 md:w-1/2 md:order-2">
                     <img
@@ -47,7 +53,15 @@ const Initiatives = () => {
                             account for free to help support your efforts in
                             your local community. If you want to start a new
                             meetup, check out the GDN FAQ for more information.
-                            View the GDN map of  <a href="http://gdn.gobridge.org/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer" >Go Meetups</a>
+                            View the GDN map of{" "}
+                            <a
+                                href="http://gdn.gobridge.org/"
+                                className="font-semibold text-purple-400"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Go Meetups
+                            </a>
                         </p>
                     </div>
                 </div>
@@ -90,7 +104,15 @@ const Initiatives = () => {
                             exercises to help you improve. We will provide code
                             reviews and guidance. This platform will get you
                             started whether you want to be a Mentor or you need
-                            a Mentor.<a href="https://mentoring.gobridge.org/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer"  >Mentoring Platform.</a>
+                            a Mentor.
+                            <a
+                                href="https://mentoring.gobridge.org/"
+                                className="font-semibold text-purple-400"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Mentoring Platform.
+                            </a>
                         </p>
                     </div>
                 </div>
@@ -129,7 +151,15 @@ const Initiatives = () => {
                         <p className="text-left text-gray-600 text-l">
                             We are helping kids in Romania learn Go buy
                             providing familes access to Raspberry Pi's. To learn
-                            more check out this <a href="https://start.unpi.ro/english/" className="font-semibold text-purple-400" target="_blank" rel="noreferrer">site.</a>
+                            more check out this{" "}
+                            <a
+                                href="https://start.unpi.ro/english/"
+                                className="font-semibold text-purple-400"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                site.
+                            </a>
                         </p>
                     </div>
                 </div>

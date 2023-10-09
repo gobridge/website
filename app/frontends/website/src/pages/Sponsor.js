@@ -18,7 +18,7 @@ const Sponsor = () => {
                         travel expenses for trainers. If you or your company is
                         interested in helping <br />{" "}
                         <button onClick={() => setShowMailModal(true)} className="px-4 py-2 mt-3 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110">
-                            Email Us
+                            Contact Us
                         </button>
                         <MailModal onClose={handleOnClose} visible={showMailModal}/>
                     </p>
