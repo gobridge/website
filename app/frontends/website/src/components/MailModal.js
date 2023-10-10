@@ -16,12 +16,19 @@ const MailModal = ({ visible, onClose }) => {
 
     const handleOnClose = (e) => {
         console.log("*****Handling Onclose");
-        if (e.target.id === "container") onClose();
-        setName("");
-        setEmail("");
-        setMsg("");
-        setSuccessMessage("");
-        setErrorMessage("");
+        // This takes into account only the parent, so the submit button actually works.
+        e.stopPropagation();
+        // If you don't put everything inside the if, it will delete all your data
+        // when you click the modal.
+        // You only want this to be deleted when you close it.
+        if (e.target.id === "container") {
+            onClose();
+            setName("");
+            setEmail("");
+            setMsg("");
+            setSuccessMessage("");
+            setErrorMessage("");
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -29,6 +36,11 @@ const MailModal = ({ visible, onClose }) => {
         e.preventDefault();
         setStatus("Sending...");
         try {
+            // Here instead of try/catch you can use
+            // response.then().catch().finally()
+            // Since axios returns a promise.
+            // With this approach you can handle all errors in the same place!
+            // But that's just a suggestion!
             const response = await axios.post(
                 apiURL,
                 {
@@ -53,11 +65,19 @@ const MailModal = ({ visible, onClose }) => {
                 setErrorMessage("Failed to send email");
                 alert("Failed to send email");
             }
-            setStatus("Send Email");
+
+            // Since you have it here and below, it's better to put this state change at the end;
+            // setStatus("Send Email");
         } catch (error) {
             console.error("Error:", error);
             setErrorMessage("An error occurred while sending the email");
+            setStatus("Send Email");
         }
+
+        // Here you should set the status back to Send email aswell, because
+        // if your user has an error he can't send any more emails.
+        // setStatus here to have it executed no matter the state of the email.
+        setStatus("Send Email");
         console.log("---->Exiting Handle Submit");
     };
 
@@ -78,9 +98,8 @@ const MailModal = ({ visible, onClose }) => {
         }
     };
 
-    if (!visible) return null;
-
-    return (
+    // Always use ternary Ifs for conditional rendering in React, it's easier to read
+    return visible ? (
         <div
             id="container"
             onClick={handleOnClose}
@@ -156,7 +175,7 @@ const MailModal = ({ visible, onClose }) => {
                 </form>
             </div>
         </div>
-    );
+    ) : null;
 };
 
 export default MailModal;
