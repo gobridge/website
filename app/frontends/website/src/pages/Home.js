@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import MailModal from "../components/MailModal";
+import MsgModal from "../components/MsgModal";
 
 const Home = () => {
     const [showMailModal, setShowMailModal] = useState(false);
+    const [showMsgModal, setShowMsgModal] = useState(false);
 
     const handleOnClose = () => setShowMailModal(false);
+    const handleOnCloseMsg = () => setShowMsgModal(false);
 
     return (
         <div>
@@ -37,6 +40,10 @@ const Home = () => {
                         <MailModal
                             onClose={handleOnClose}
                             visible={showMailModal}
+                        />
+                        <MsgModal
+                            onClose={handleOnCloseMsg}
+                            visible={showMsgModal}
                         />
                     </p>
                 </div>

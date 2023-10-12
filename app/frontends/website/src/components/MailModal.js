@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import MsgModal from "./MsgModal";
 
 const MailModal = ({ visible, onClose }) => {
     const [status, setStatus] = useState("Send Email");
@@ -8,6 +9,7 @@ const MailModal = ({ visible, onClose }) => {
     const [msg, setMsg] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [showMsgModal, setShowMsgModal] = useState(false)
 
     var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
@@ -58,12 +60,14 @@ const MailModal = ({ visible, onClose }) => {
             if (response.status === 200) {
                 console.log("***** email sent *****");
                 setSuccessMessage("Email sent successfully");
+                setShowMsgModal(true);
+                console.log('****** MsgModal activated - email sent ********')
                 setEmail("");
                 setName("");
                 setMsg("");
             } else {
                 setErrorMessage("Failed to send email");
-                alert("Failed to send email");
+                setShowMsgModal(true);
             }
 
             // Since you have it here and below, it's better to put this state change at the end;
@@ -71,6 +75,8 @@ const MailModal = ({ visible, onClose }) => {
         } catch (error) {
             console.error("Error:", error);
             setErrorMessage("An error occurred while sending the email");
+            setShowMsgModal(true);
+            console.log('****** Entering MsgModal - after error ********')
             setStatus("Send Email");
         }
 
@@ -116,7 +122,7 @@ const MailModal = ({ visible, onClose }) => {
                     </span>
                 </button>
                 <p className="font-bold text-gray-600"> Contact Us</p>
-                {successMessage && (
+                {/* {successMessage && (
                     <div
                         className="relative px-4 py-2 text-green-700 bg-green-100 border border-green-400 rounded"
                         role="alert"
@@ -133,7 +139,7 @@ const MailModal = ({ visible, onClose }) => {
                     >
                         <span className="block sm:inline">{errorMessage}</span>
                     </div>
-                )}
+                )} */}
 
                 <form
                     className="w-full h-auto p-4 mt-4 mb-4"
