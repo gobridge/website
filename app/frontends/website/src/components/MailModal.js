@@ -9,7 +9,7 @@ const MailModal = ({ visible, onClose }) => {
     const [msg, setMsg] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [showMsgModal, setShowMsgModal] = useState(false)
+    const [showMsgModal, setShowMsgModal] = useState(false);
 
     var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
@@ -37,13 +37,9 @@ const MailModal = ({ visible, onClose }) => {
         console.log("---->Entering Handle Submit");
         e.preventDefault();
         setStatus("Sending...");
-        try {
-            // Here instead of try/catch you can use
-            // response.then().catch().finally()
-            // Since axios returns a promise.
-            // With this approach you can handle all errors in the same place!
-            // But that's just a suggestion!
-            const response = await axios.post(
+
+        axios
+            .post(
                 apiURL,
                 {
                     name,
@@ -55,36 +51,33 @@ const MailModal = ({ visible, onClose }) => {
                         "Content-Type": "application/json",
                     },
                 }
-            );
-
-            if (response.status === 200) {
-                console.log("***** email sent *****");
-                setSuccessMessage("Email sent successfully");
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("***** email sent *****");
+                    setSuccessMessage("Email sent successfully");
+                    setShowMsgModal(true);
+                    console.log(
+                        "****** MsgModal activated - email sent ********"
+                    );
+                    setEmail("");
+                    setName("");
+                    setMsg("");
+                } else {
+                    setErrorMessage("Failed to send email");
+                    setShowMsgModal(true);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                setErrorMessage("An error occurred while sending the email");
                 setShowMsgModal(true);
-                console.log('****** MsgModal activated - email sent ********')
-                setEmail("");
-                setName("");
-                setMsg("");
-            } else {
-                setErrorMessage("Failed to send email");
-                setShowMsgModal(true);
-            }
-
-            // Since you have it here and below, it's better to put this state change at the end;
-            // setStatus("Send Email");
-        } catch (error) {
-            console.error("Error:", error);
-            setErrorMessage("An error occurred while sending the email");
-            setShowMsgModal(true);
-            console.log('****** Entering MsgModal - after error ********')
-            setStatus("Send Email");
-        }
-
-        // Here you should set the status back to Send email aswell, because
-        // if your user has an error he can't send any more emails.
-        // setStatus here to have it executed no matter the state of the email.
-        setStatus("Send Email");
-        console.log("---->Exiting Handle Submit");
+                console.log("****** Entering MsgModal - after error ********");
+            })
+            .finally(() => {
+                setStatus("Send Email");
+                console.log("---->Exiting Handle Submit");
+            });
     };
 
     const handleChange = (e) => {

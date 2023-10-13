@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-const MsgModal = ({ successMessage, errorMessage, showMsgModal, onClose }) => {
+const MsgModal = ({
+    successMessage,
+    errorMessage,
+    showMsgModal,
+    onClose,
+    visible,
+}) => {
     console.log("****** Entering MsgModal ********");
     const handleOnClose = (e) => {
         e.stopPropagation();
@@ -9,7 +15,7 @@ const MsgModal = ({ successMessage, errorMessage, showMsgModal, onClose }) => {
         }
     };
 
-    return showMsgModal ? (
+    return visible ? (
         <div
             id="container"
             onClick={handleOnClose}
