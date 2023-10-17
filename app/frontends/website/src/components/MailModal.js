@@ -8,13 +8,16 @@ const MailModal = ({
     showMailModal,
     setShowMailModal,
     setShowMsgModal,
+    successMessage,
+    setSuccessMessage,
+    errorMessage,
+    setErrorMessage,
 }) => {
     const [status, setStatus] = useState("Send Email");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+   
 
     var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
@@ -123,24 +126,6 @@ const MailModal = ({
                     </span>
                 </button>
                 <p className="font-bold text-gray-600"> Contact Us</p>
-                {/* {successMessage && (
-                    <div
-                        className="relative px-4 py-2 text-green-700 bg-green-100 border border-green-400 rounded"
-                        role="alert"
-                    >
-                        <span className="block sm:inline">
-                            {successMessage}
-                        </span>
-                    </div>
-                )}
-                {errorMessage && (
-                    <div
-                        className="relative px-4 py-2 text-red-700 bg-red-100 border border-red-400 rounded"
-                        role="alert"
-                    >
-                        <span className="block sm:inline">{errorMessage}</span>
-                    </div>
-                )} */}
 
                 <form
                     className="w-full h-auto p-4 mt-4 mb-4"

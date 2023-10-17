@@ -5,6 +5,8 @@ import MsgModal from "../components/MsgModal";
 const Home = () => {
     const [showMailModal, setShowMailModal] = useState(false);
     const [showMsgModal, setShowMsgModal] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleOnClose = () => setShowMailModal(false);
     const handleOnCloseMsg = () => setShowMsgModal(false);
@@ -43,14 +45,21 @@ const Home = () => {
                             showMsgModal={showMsgModal}
                             setShowMailModal={setShowMailModal}
                             setShowMsgModal={setShowMsgModal}
-       
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
                         />
                         <MsgModal
-                            onClose={handleOnCloseMsg}
-                            visible={showMsgModal}
+                            onCloseMsg={handleOnCloseMsg}
+                            visibleMsg={showMsgModal}
                             showMailModal={showMailModal}
-                            setShowMsgModal={setShowMsgModal} 
+                            setShowMsgModal={setShowMsgModal}
                             setShowMailModal={setShowMailModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
                         />
                     </p>
                 </div>

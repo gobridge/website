@@ -1,43 +1,47 @@
 import React, { useState } from "react";
 
 const MsgModal = ({
-   successMessage,
-   errorMessage,
-   showMsgModal,
-   setShowMsgModal,
-   onClose,
-   visible,
+    successMessage,
+    setSuccessMessage,
+    errorMessage,
+    setErrorMessage,
+    showMsgModal,
+    setShowMsgModal,
+    onCloseMsg,
+    visibleMsg,
 }) => {
-   
     console.log("****** Entering MsgModal ********");
+    
     const handleOnClose = (e) => {
         e.stopPropagation();
         if (e.target.id === "container") {
-            onClose();
+            onCloseMsg();
             setShowMsgModal(false);
+            setSuccessMessage("");
+            setErrorMessage("");
         }
     };
 
-    return visible ? (
+    return visibleMsg ? (
         <div
             id="container"
             onClick={handleOnClose}
-            className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm"
+            className="fixed inset-0 z-40 flex items-center justify-center p-2 m-2 bg-black bg-opacity-30 backdrop-blur-sm"
         >
             <div className="relative p-2 bg-white rounded w-[90%] h-auto max-w-xl max-h-l flex flex-col justify-between items-center">
                 <br />
                 <button
                     className="absolute text-black bg-transparent border-0 top-2 right-2 "
-                    onClick={() => onClose()}
+                    onClick={() => onCloseMsg()}
                 >
                     <span className="justify-center block w-6 h-6 py-0 text-xl font-bold text-gray-600 bg-white rounded item-center opacity-7">
                         x
                     </span>
                 </button>
-                <p className="font-bold text-gray-600"> Message </p>
+               
                 {successMessage && (
                     <div
-                        className="relative px-4 py-2 text-green-700 bg-green-100 border border-green-400 rounded"
+                        className="relative px-4 py-2 m-2 text-gray-600 "
                         role="alert"
                     >
                         <span className="block sm:inline">
@@ -47,7 +51,7 @@ const MsgModal = ({
                 )}
                 {errorMessage && (
                     <div
-                        className="relative px-4 py-2 text-red-700 bg-red-100 border border-red-400 rounded"
+                        className="relative px-4 py-2 m-2 text-gray-600 "
                         role="alert"
                     >
                         <span className="block sm:inline">{errorMessage}</span>
@@ -56,7 +60,7 @@ const MsgModal = ({
 
                 <button
                     className="px-4 py-2 font-bold text-white bg-purple-400 rounded inputClass hover:bg-purple-500"
-                    onClick={handleOnClose}
+                    onClick={() => onCloseMsg()}
                 >
                     Close
                 </button>

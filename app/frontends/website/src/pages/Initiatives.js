@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import MailModal from "../components/MailModal";
+import MsgModal from "../components/MsgModal";
 
 const Initiatives = () => {
     const [showMailModal, setShowMailModal] = useState(false);
+    const [showMsgModal, setShowMsgModal] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleOnClose = () => setShowMailModal(false);
+    const handleOnCloseMsg = () => setShowMsgModal(false);
 
     return (
         <div>
@@ -16,14 +21,36 @@ const Initiatives = () => {
                     <p className="text-3xl text-left text-gray-600">
                         We always have fun and exciting things we are working on
                         to support the Go community. If you have time to help or
-                        you think one of these programs can help You 
-                        <br /><br />
-                        <button onClick={() => setShowMailModal(true)} className="px-4 py-2 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110">
+                        you think one of these programs can help You
+                        <br />
+                        <br />
+                        <button
+                            onClick={() => setShowMailModal(true)}
+                            className="px-4 py-2 font-bold text-white transform bg-purple-400 rounded hover:bg-purple-500 motion-safe:hover:scale-110"
+                        >
                             Contact Us
                         </button>
                         <MailModal
                             onClose={handleOnClose}
                             visible={showMailModal}
+                            showMsgModal={showMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            setShowMsgModal={setShowMsgModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
+                        />
+                        <MsgModal
+                            onCloseMsg={handleOnCloseMsg}
+                            visibleMsg={showMsgModal}
+                            showMailModal={showMailModal}
+                            setShowMsgModal={setShowMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
                         />
                     </p>
                 </div>
