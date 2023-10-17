@@ -40,10 +40,17 @@ const Home = () => {
                         <MailModal
                             onClose={handleOnClose}
                             visible={showMailModal}
+                            showMsgModal={showMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            setShowMsgModal={setShowMsgModal}
+       
                         />
                         <MsgModal
                             onClose={handleOnCloseMsg}
                             visible={showMsgModal}
+                            showMailModal={showMailModal}
+                            setShowMsgModal={setShowMsgModal} 
+                            setShowMailModal={setShowMailModal}
                         />
                     </p>
                 </div>

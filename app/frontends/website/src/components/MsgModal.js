@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 
 const MsgModal = ({
-    successMessage,
-    errorMessage,
-    showMsgModal,
-    onClose,
-    visible,
+   successMessage,
+   errorMessage,
+   showMsgModal,
+   setShowMsgModal,
+   onClose,
+   visible,
 }) => {
+   
     console.log("****** Entering MsgModal ********");
     const handleOnClose = (e) => {
         e.stopPropagation();
         if (e.target.id === "container") {
             onClose();
+            setShowMsgModal(false);
         }
     };
 

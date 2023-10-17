@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
-import MsgModal from "./MsgModal";
 
-const MailModal = ({ visible, onClose }) => {
+const MailModal = ({
+    visible,
+    onClose,
+    showMsgModal,
+    showMailModal,
+    setShowMailModal,
+    setShowMsgModal,
+}) => {
     const [status, setStatus] = useState("Send Email");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [showMsgModal, setShowMsgModal] = useState(false);
 
     var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
@@ -33,7 +38,7 @@ const MailModal = ({ visible, onClose }) => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         console.log("---->Entering Handle Submit");
         e.preventDefault();
         setStatus("Sending...");
@@ -56,6 +61,7 @@ const MailModal = ({ visible, onClose }) => {
                 if (response.status === 200) {
                     console.log("***** email sent *****");
                     setSuccessMessage("Email sent successfully");
+                    setShowMailModal(false);
                     setShowMsgModal(true);
                     console.log(
                         "****** MsgModal activated - email sent ********"
@@ -65,12 +71,14 @@ const MailModal = ({ visible, onClose }) => {
                     setMsg("");
                 } else {
                     setErrorMessage("Failed to send email");
+                    setShowMailModal(false);
                     setShowMsgModal(true);
                 }
             })
             .catch((error) => {
                 console.error("Error:", error);
                 setErrorMessage("An error occurred while sending the email");
+                setShowMailModal(false);
                 setShowMsgModal(true);
                 console.log("****** Entering MsgModal - after error ********");
             })
