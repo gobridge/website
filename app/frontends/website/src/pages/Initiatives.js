@@ -57,8 +57,8 @@ const Initiatives = () => {
                 <div className="order-1 md:w-1/2 md:order-2">
                     <img
                         src="images/wwg.jpg"
-                        alt="Gophers Banner"
-                        className="w-full h-80 md:w-full"
+                        alt="Women Who Go"
+                        className="w-full md:max-h-80 aspect-auto md:aspect-auto"
                     />
                 </div>
             </div>

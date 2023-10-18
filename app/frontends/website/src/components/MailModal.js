@@ -17,9 +17,8 @@ const MailModal = ({
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
-   
 
-    var apiURL = "http://localhost:8080/api/contact";
+    var apiURL = "http://localhost:8080/api/contact?email=fail";
     if (window.location.port === "" || window.location.port === "0") {
         apiURL = "http://gobridge.org/api/contact";
     }
@@ -76,13 +75,19 @@ const MailModal = ({
                     setErrorMessage("Failed to send email");
                     setShowMailModal(false);
                     setShowMsgModal(true);
+                    setEmail("");
+                    setName("");
+                    setMsg("");
                 }
             })
             .catch((error) => {
                 console.error("Error:", error);
-                setErrorMessage("An error occurred while sending the email");
+                setErrorMessage("An error occurred while sending the email.  Contact us directly at support@gobridge.com");
                 setShowMailModal(false);
                 setShowMsgModal(true);
+                setEmail("");
+                setName("");
+                setMsg("");
                 console.log("****** Entering MsgModal - after error ********");
             })
             .finally(() => {
