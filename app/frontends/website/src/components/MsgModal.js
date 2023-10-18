@@ -10,7 +10,6 @@ const MsgModal = ({
     onCloseMsg,
     visibleMsg,
 }) => {
-    console.log("****** Entering MsgModal ********");
 
     const handleOnClose = (e) => {
         e.stopPropagation();

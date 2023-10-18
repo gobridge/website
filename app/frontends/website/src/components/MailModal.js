@@ -18,18 +18,14 @@ const MailModal = ({
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
 
-    var apiURL = "http://localhost:8080/api/contact?email=fail";
+    var apiURL = "http://localhost:8080/api/contact";
     if (window.location.port === "" || window.location.port === "0") {
         apiURL = "http://gobridge.org/api/contact";
     }
 
     const handleOnClose = (e) => {
-        console.log("*****Handling Onclose");
-        // This takes into account only the parent, so the submit button actually works.
         e.stopPropagation();
-        // If you don't put everything inside the if, it will delete all your data
-        // when you click the modal.
-        // You only want this to be deleted when you close it.
+
         if (e.target.id === "container") {
             onClose();
             setName("");
@@ -41,7 +37,6 @@ const MailModal = ({
     };
 
     const handleSubmit = (e) => {
-        console.log("---->Entering Handle Submit");
         e.preventDefault();
         setStatus("Sending...");
 
@@ -61,13 +56,9 @@ const MailModal = ({
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log("***** email sent *****");
                     setSuccessMessage("Email sent successfully");
                     setShowMailModal(false);
                     setShowMsgModal(true);
-                    console.log(
-                        "****** MsgModal activated - email sent ********"
-                    );
                     setEmail("");
                     setName("");
                     setMsg("");
@@ -88,11 +79,9 @@ const MailModal = ({
                 setEmail("");
                 setName("");
                 setMsg("");
-                console.log("****** Entering MsgModal - after error ********");
             })
             .finally(() => {
                 setStatus("Send Email");
-                console.log("---->Exiting Handle Submit");
             });
     };
 
@@ -113,7 +102,7 @@ const MailModal = ({
         }
     };
 
-    // Always use ternary Ifs for conditional rendering in React, it's easier to read
+
     return visible ? (
         <div
             id="container"
