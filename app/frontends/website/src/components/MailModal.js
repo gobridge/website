@@ -73,7 +73,9 @@ const MailModal = ({
             })
             .catch((error) => {
                 console.error("Error:", error);
-                setErrorMessage("An error occurred while sending the email.  Contact us directly at support@gobridge.com");
+                setErrorMessage(
+                    "An error occurred while sending the email.  Contact us directly at support@gobridge.com"
+                );
                 setShowMailModal(false);
                 setShowMsgModal(true);
                 setEmail("");
@@ -101,7 +103,6 @@ const MailModal = ({
             default:
         }
     };
-
 
     return visible ? (
         <div
