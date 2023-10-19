@@ -20,13 +20,11 @@ import (
 var static embed.FS
 
 func main() {
-	var log *logger.Logger
-
 	traceIDFunc := func(ctx context.Context) string {
 		return handlers.GetTraceID(ctx)
 	}
 
-	log = logger.New(os.Stdout, "WEBSITE", traceIDFunc)
+	log := logger.New(os.Stdout, "WEBSITE", traceIDFunc)
 
 	// -------------------------------------------------------------------------
 

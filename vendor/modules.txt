@@ -1,6 +1,9 @@
 # github.com/ardanlabs/conf/v3 v3.1.6
 ## explicit; go 1.13
 github.com/ardanlabs/conf/v3
+# github.com/google/uuid v1.3.1
+## explicit
+github.com/google/uuid
 # github.com/sendgrid/rest v2.6.9+incompatible
 ## explicit
 github.com/sendgrid/rest

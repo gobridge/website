@@ -1,24 +1,48 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const MailModal = ({ visible, onClose }) => {
+const MailModal = ({
+    visible,
+    onClose,
+    showMsgModal,
+    showMailModal,
+    setShowMailModal,
+    setShowMsgModal,
+    successMessage,
+    setSuccessMessage,
+    errorMessage,
+    setErrorMessage,
+}) => {
     const [status, setStatus] = useState("Send Email");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [msg, setMsg] = useState("");
 
+    var apiURL = "http://localhost:8080/api/contact";
+    if (window.location.port === "" || window.location.port === "0") {
+        apiURL = "http://gobridge.org/api/contact";
+    }
+
     const handleOnClose = (e) => {
-        console.log("*****Handling Onclose");
-        if (e.target.id === "container") onClose();
+        e.stopPropagation();
+
+        if (e.target.id === "container") {
+            onClose();
+            setName("");
+            setEmail("");
+            setMsg("");
+            setSuccessMessage("");
+            setErrorMessage("");
+        }
     };
 
-    const handleSubmit = async (e) => {
-        console.log("---->Entering Handle Submit");
+    const handleSubmit = (e) => {
         e.preventDefault();
         setStatus("Sending...");
-        try {
-            const response = await axios.post(
-                "https://gobridge.org/api/contact",
+
+        axios
+            .post(
+                apiURL,
                 {
                     name,
                     email,
@@ -29,22 +53,38 @@ const MailModal = ({ visible, onClose }) => {
                         "Content-Type": "application/json",
                     },
                 }
-            );
-
-            if (response.status === 200) {
-                console.log("***** email sent *****");
-                alert("Email sent successfully");
-            } else {
-                alert("Failed to send email");
-            }
-            setEmail("");
-            setName("");
-            setMsg("");
-            setStatus("Send Email");
-        } catch (error) {
-            console.error("Error:", error);
-        }
-        console.log("---->Exiting Handle Submit");
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    setSuccessMessage("Email sent successfully");
+                    setShowMailModal(false);
+                    setShowMsgModal(true);
+                    setEmail("");
+                    setName("");
+                    setMsg("");
+                } else {
+                    setErrorMessage("Failed to send email");
+                    setShowMailModal(false);
+                    setShowMsgModal(true);
+                    setEmail("");
+                    setName("");
+                    setMsg("");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                setErrorMessage(
+                    "An error occurred while sending the email.  Contact us directly at support@gobridge.com"
+                );
+                setShowMailModal(false);
+                setShowMsgModal(true);
+                setEmail("");
+                setName("");
+                setMsg("");
+            })
+            .finally(() => {
+                setStatus("Send Email");
+            });
     };
 
     const handleChange = (e) => {
@@ -64,16 +104,24 @@ const MailModal = ({ visible, onClose }) => {
         }
     };
 
-    if (!visible) return null;
-
-    return (
+    return visible ? (
         <div
             id="container"
             onClick={handleOnClose}
             className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm"
         >
-            <div className="p-2 bg-white rounded w-[90%] h-[60%] max-w-xl max-h-l flex flex-col justify-between items-center">
+            <div className="relative p-2 bg-white rounded w-[90%] h-auto max-w-xl max-h-l flex flex-col justify-between items-center">
+                <br />
+                <button
+                    className="absolute text-black bg-transparent border-0 top-2 right-2 "
+                    onClick={() => onClose()}
+                >
+                    <span className="justify-center block w-6 h-6 py-0 text-xl font-bold text-gray-600 bg-white rounded item-center opacity-7">
+                        x
+                    </span>
+                </button>
                 <p className="font-bold text-gray-600"> Contact Us</p>
+
                 <form
                     className="w-full h-auto p-4 mt-4 mb-4"
                     onSubmit={handleSubmit}
@@ -85,6 +133,7 @@ const MailModal = ({ visible, onClose }) => {
                         name="name"
                         value={name}
                         onChange={handleChange}
+                        required
                     ></input>
                     <input
                         type="email"
@@ -93,6 +142,7 @@ const MailModal = ({ visible, onClose }) => {
                         name="email"
                         value={email}
                         onChange={handleChange}
+                        required
                     ></input>
                     <input
                         type="text"
@@ -101,9 +151,10 @@ const MailModal = ({ visible, onClose }) => {
                         name="message"
                         value={msg}
                         onChange={handleChange}
+                        required
                     ></input>
                     <button
-                        className="px-4 py-2 font-bold text-white bg-purple-400 rounded hover:bg-purple-500"
+                        className="px-4 py-2 font-bold text-white bg-purple-400 rounded inputClass hover:bg-purple-500"
                         type="submit"
                     >
                         {status}
@@ -111,7 +162,7 @@ const MailModal = ({ visible, onClose }) => {
                 </form>
             </div>
         </div>
-    );
+    ) : null;
 };
 
 export default MailModal;
