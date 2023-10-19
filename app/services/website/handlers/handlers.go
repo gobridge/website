@@ -83,11 +83,10 @@ func (h *handlers) contactUs(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("origin")
 
 	h.log.Print(r.Context(), "handler-started", "origin", origin)
-	h.log.Print(r.Context(), "HEADERS", "map", r.Header)
 	defer h.log.Print(r.Context(), "handler-completed")
 
 	switch origin {
-	case "http://localhost:3000":
+	case "http://localhost:3000", "http://localhost:8080":
 		h.contactUsDev(w, r)
 
 	case "https://gobridge.org":
