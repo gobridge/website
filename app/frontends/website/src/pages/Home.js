@@ -18,7 +18,7 @@ const Home = () => {
                     <h1 className="mb-4 text-5xl font-bold text-left">
                         GoBridge
                     </h1>
-                    <p className="text-3xl text-left gray-600 text-">
+                    <p className="text-3xl text-left text-gray-600">
                         GoBridge is a member of the non-profit organization
                         <a
                             className="text-purple-400 hover:underline"
@@ -67,7 +67,7 @@ const Home = () => {
                     <img
                         src="images/gbbanner.png"
                         alt="Gophers Banner"
-                        className="w-full h-80 md:w-full"
+                        className="w-full h-80 md:w-full aspect-auto md:aspect-auto"
                     />
                 </div>
             </div>
