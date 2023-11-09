@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import MailModal from "../components/MailModal";
+import MsgModal from "../components/MsgModal";
 
 const WorkshopOrganize = () => {
     const [showMailModal, setShowMailModal] = useState(false);
+    const [showMsgModal, setShowMsgModal] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleOnClose = () => setShowMailModal(false);
+    const handleOnCloseMsg = () => setShowMsgModal(false);
+
     return (
         <div className="flex flex-col p-5 m-10 ">
             <div className="flex flex-col items-center justify-center w-full h-full p-5 m-5 md:flex-row md:justify-center">
@@ -12,7 +18,7 @@ const WorkshopOrganize = () => {
                     <img
                         src="images/gophersworking.png"
                         alt="Gophers"
-                        className="w-1/2 ml-20 h-1/3"
+                        className="items-center w-auto ml-20  h-2/3 aspect-auto md:aspect-auto"
                     />
                 </div>
                 <div className="flex flex-col justify-center order-2 md:w-1/2 md:order-1">
@@ -128,7 +134,7 @@ const WorkshopOrganize = () => {
                         </a>
                     </li>
                     <li>
-                        <a onClick={() => setShowMailModal(true)} href="#">
+                        <a  onClick={() => setShowMailModal(true)} href="#">
                             <img
                                 src="images/icons8-envelope-50.png"
                                 alt="X"
@@ -138,6 +144,24 @@ const WorkshopOrganize = () => {
                         <MailModal
                             onClose={handleOnClose}
                             visible={showMailModal}
+                            showMsgModal={showMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            setShowMsgModal={setShowMsgModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
+                        />
+                        <MsgModal
+                            onCloseMsg={handleOnCloseMsg}
+                            visibleMsg={showMsgModal}
+                            showMailModal={showMailModal}
+                            setShowMsgModal={setShowMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
                         />
                     </li>
                 </ul>
