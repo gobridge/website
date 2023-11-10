@@ -86,7 +86,7 @@ const Navbar = () => {
                      {navlinks.map((link, index) => (
                               <a
                                  key={index}
-                                 className="block px-3 py-2 text-base font-medium text-purple-400 rounded-md hover:bg-gray-700 hover:text-white"
+                                 className="block px-3 py-2 text-base font-medium text-purple-400 rounded-md hover:bg-purple-300 hover:text-white"
                                  href={link.link}
                               >
                                  {link.title}

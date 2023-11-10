@@ -39,7 +39,7 @@ const MsgModal = ({
               </button>
 
               {successMessage && (
-                  <div className="flex items-center justify-center p-4 text-gray-600">
+                  <div className="flex items-center py-4 pl-20 pr-10 text-gray-600 ">
                       <span>{successMessage}</span>
                   </div>
               )}

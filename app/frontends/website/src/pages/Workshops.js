@@ -8,7 +8,7 @@ const Workshops = () => {
                 <img
                     src="images/gopherlaptop.png"
                     alt="Gophers"
-                    className="items-center w-auto h-2/3"
+                    className="items-center w-auto h-2/3 aspect-auto md:aspect-auto"
                 />
             </div>
             <div className="flex-col justify-center order-2 m-8 mb-2 md:w-auto md:pr-8 lg:order-1">
