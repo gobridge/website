@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import MailModal from "../components/MailModal";
+import MsgModal from "../components/MsgModal";
 import { Link } from "react-router-dom";
 
 const Organize = () => {
     const [showMailModal, setShowMailModal] = useState(false);
+    const [showMsgModal, setShowMsgModal] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleOnClose = () => setShowMailModal(false);
+    const handleOnCloseMsg = () => setShowMsgModal(false);
+
     return (
         <div className="flex flex-col p-5 m-10 ">
             <div>
@@ -158,6 +164,24 @@ const Organize = () => {
                         <MailModal
                             onClose={handleOnClose}
                             visible={showMailModal}
+                            showMsgModal={showMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            setShowMsgModal={setShowMsgModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
+                        />
+                        <MsgModal
+                            onCloseMsg={handleOnCloseMsg}
+                            visibleMsg={showMsgModal}
+                            showMailModal={showMailModal}
+                            setShowMsgModal={setShowMsgModal}
+                            setShowMailModal={setShowMailModal}
+                            successMessage={successMessage}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            setSuccessMessage={setSuccessMessage}
                         />
                     </li>
                 </ul>
