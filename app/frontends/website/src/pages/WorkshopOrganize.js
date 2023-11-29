@@ -18,8 +18,7 @@ const WorkshopOrganize = () => {
                     <img
                         src="images/gophersworking.png"
                         alt="Gophers"
-                        // className="items-center w-auto ml-20 h-2/3 aspect-auto md:aspect-auto md:w-1/2"
-                        className="w-full md:w-2/3"
+                        className="w-full md:w-2/3 aspect-auto md:aspect-auto"
                     />
                 </div>
                 <div className="flex flex-col justify-center order-2 md:w-1/2 md:order-1">
