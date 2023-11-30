@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
       <footer className="py-4 text-purple-400 bg-fuchsia-100">
-          <div className="container flex items-center justify-between mx-auto">
+          <div className="flex items-center justify-between px-4 mx-auto  sm:px-4 lg:px-8">
           <a href="/Privacy" className="text-purple-400 " target="_blank" rel="noreferrer">
                   Privacy Policy
               </a>
