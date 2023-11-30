@@ -13,6 +13,8 @@ import Sponsor from './pages/Sponsor';
 import Donate from './pages/Donate';
 import WorkshopOrganize from './pages/WorkshopOrganize';
 import Organize from './pages/Organize';
+import CodeOfConduct from './pages/CodeOfConduct';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
                <Route path="/Donate" element={<Donate />} />            
                <Route path="/WorkshopOrganize" element={<WorkshopOrganize />} />            
                <Route path="/Organize" element={<Organize />} />            
+               <Route path="/CodeOfConduct" element={<CodeOfConduct />} />            
+               <Route path="/Privacy" element={<Privacy />} />            
          </Routes>
 
          <Footer/>

@@ -13,12 +13,12 @@ const CodeOfConduct = () => {
 
     return (
         <div className="flex items-center justify-center">
-            <div className="flex flex-col items-center justify-center w-full p-1 m-3 md:flex-col">
+            <div className="flex flex-col items-center justify-center w-full p-1 m-3 lg:flex-col">
                 <div className="flex flex-col justify-center order-2 md:w-2/3 md:pr-8 md:order-1">
                     <img
                         src="images/goinclusion.png"
                         alt="Gophers Banner"
-                        className="w-full h-90 md:w-auto"
+                        className="items-center w-full h-90 md:w-1/2"
                     />
                 </div>
                 <div className="flex flex-col justify-center order-2 m-10 md:w-2/3 md:pr-8 md:order-1">
@@ -97,7 +97,12 @@ const CodeOfConduct = () => {
                                 setSuccessMessage={setSuccessMessage}
                             />
                     </p>
-                    <br />                  
+                    <br />  
+                    <h2 className="mb-4 text-3xl font-bold text-left"> Moderator guidelines for applying policies and the CoC</h2>
+                    <p className="text-xl text-left text-gray-600">
+                    It’s important that all users’ questions, answers and comments are in line with this CoC, as well as with the category and topic, or channel, they belong to. When an organizer or moderator decides to approach someone personally, they must always assume intentions are good, which is usually the case. Over-moderation is harmful to the atmosphere of the community and should be avoided.
+                    </p>
+                    <br />
                 </div>
             </div>
         </div>
