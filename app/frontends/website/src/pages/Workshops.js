@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 const Workshops = () => {
     return (
-        <div className="flex flex-col items-center justify-center m-10 lg:flex-row md:mx-30 md:p-2 lg:my-0">
-            <div className="items-center order-1 w-2/3 h-auto mb-0 md:w-1/2 lg:order-2">
+        <div className="flex flex-col items-center justify-center m-10 lg:flex-col md:mx-30 md:p-2 lg:my-0">
+            <div className="items-center order-1 w-2/3 h-auto mb-0 md:w-1/2 lg:order-1">
                 <img
-                    src="images/gopherlaptop.png"
+                    src="images/gophercon.png"
                     alt="Gophers"
                     className="items-center w-auto h-2/3 aspect-auto md:aspect-auto"
                 />
             </div>
-            <div className="flex-col justify-center order-2 m-8 mb-2 md:w-auto md:pr-8 lg:order-1">
+            <div className="flex-col justify-center order-2 m-8 mb-2 md:w-auto md:pr-8 lg:order-2">
                 <h1 className="mb-4 text-5xl font-bold text-left">
                     Organize a Workshop
                 </h1>

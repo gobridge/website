@@ -26,7 +26,7 @@ const Eventdocs = () => {
                         to our{" "}
                         <a
                             className="font-semibold text-purple-500 hover:underline"
-                            href="https://github.com/gobridge/about-us/blob/master/coc.md"
+                            href="/CodeOfConduct"
                             target="_blank"
                             rel="nonopener noreferrer"
                         >
